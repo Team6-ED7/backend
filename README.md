@@ -104,3 +104,44 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
 **Criterios de Aceptación:**
 - El usuario debe poder ver una lista de sus reservas con detalles.
 - El sistema debe permitir al usuario cancelar o modificar reservas existentes.
+
+# TAREAS
+
+## ENTORNO
+
+- Configuración del proyecto, agregar las dependencias necesarias para el proyecto.
+- Configuración de docker-compose.yml con mysql
+- Crear la base de datos.
+
+## REGISTRO DE USUARIOS
+- Crear las entidad usuario.
+- Crear repositorio.
+- Crear servicio.
+- Crear controlador.
+- Crear seguridad.
+- Crear validación.
+- Encriptar contraseña
+- Manejo de errores.
+- Creación de pruebas unitarias.
+
+## INICIO DE SESIÓN
+- Crear endpoint para iniciar sesión.
+- Agregar validaciones de inicio de sesión.
+- Añadir seguridad a la contraseña.
+- Pruebas unitarias.
+
+## ROLES Y PERMISOS
+- Crear los roles (User, Admin, Guest).
+- Añadir seguridad a la contraseña.
+- Pruebas unitarias.
+
+## REGISTRO DE ESPACIOS
+- Crear las entidad spaces.
+- Crear repositorio.
+- Crear servicio.
+- Crear controlador.
+- Crear seguridad.
+- Crear validación.
+- Encriptar contraseña
+- Manejo de errores.
+- Creación de pruebas unitarias.
