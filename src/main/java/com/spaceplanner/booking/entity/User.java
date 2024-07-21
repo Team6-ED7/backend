@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
-    private Long id;
+    private Long Id;
     private String name;
-    private String LastName;
-    private String Email;
+    private String lastName;
+    private String email;
     private String Password;
 
-    private String Rol;
+    private Rol Rol;
 
 }
