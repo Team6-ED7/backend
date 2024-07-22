@@ -1,4 +1,4 @@
-package com.spaceplanner.booking.entity;
+package com.spaceplanner.booking.user.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

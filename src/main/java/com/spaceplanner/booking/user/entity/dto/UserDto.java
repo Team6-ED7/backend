@@ -1,6 +1,6 @@
-package com.spaceplanner.booking.entity.dto;
+package com.spaceplanner.booking.user.entity.dto;
 
-import com.spaceplanner.booking.entity.Rol;
+import com.spaceplanner.booking.user.entity.Rol;
 import lombok.Data;
 
 

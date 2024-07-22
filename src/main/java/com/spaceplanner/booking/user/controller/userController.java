@@ -1,8 +1,8 @@
-package com.spaceplanner.booking.controller;
+package com.spaceplanner.booking.user.controller;
 
-import com.spaceplanner.booking.entity.User;
-import com.spaceplanner.booking.entity.dto.UserDto;
-import com.spaceplanner.booking.service.IUserService;
+import com.spaceplanner.booking.user.entity.User;
+import com.spaceplanner.booking.user.entity.dto.UserDto;
+import com.spaceplanner.booking.user.service.IUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

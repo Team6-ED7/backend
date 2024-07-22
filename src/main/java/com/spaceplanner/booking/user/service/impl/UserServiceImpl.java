@@ -1,14 +1,11 @@
-package com.spaceplanner.booking.service.impl;
+package com.spaceplanner.booking.user.service.impl;
 
-import com.spaceplanner.booking.entity.User;
-import com.spaceplanner.booking.entity.dto.UserDto;
-import com.spaceplanner.booking.repository.IUserRepository;
-import com.spaceplanner.booking.service.IUserService;
+import com.spaceplanner.booking.user.entity.User;
+import com.spaceplanner.booking.user.entity.dto.UserDto;
+import com.spaceplanner.booking.user.repository.IUserRepository;
+import com.spaceplanner.booking.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService {

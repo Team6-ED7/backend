@@ -1,6 +1,6 @@
-package com.spaceplanner.booking.repository;
+package com.spaceplanner.booking.user.repository;
 
-import com.spaceplanner.booking.entity.User;
+import com.spaceplanner.booking.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
