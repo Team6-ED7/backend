@@ -17,32 +17,6 @@ public class UserServiceImpl implements IUserService {
     private IUserRepository userRepository;
 
     @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public User saveUser(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
-    public User findUserById(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.orElseGet(User::new);
-    }
-
-    @Override
-    public void deleteUser(Long id) {
-
-    }
-
-    @Override
     public User registerUser(UserDto userDto) {
         if (userRepository.existsByEmail(userDto.getEmail())) {
             throw new RuntimeException("Email already exists");

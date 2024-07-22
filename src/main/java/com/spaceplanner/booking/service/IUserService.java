@@ -8,15 +8,6 @@ import java.util.List;
 
 public interface  IUserService {
 
-
-
-
     User registerUser(@Valid UserDto userDto);
-
-
-
-
-
-
 
 }
