@@ -2,7 +2,7 @@ package com.spaceplanner.booking.controller;
 
 import com.spaceplanner.booking.entity.User;
 import com.spaceplanner.booking.entity.dto.UserDto;
-import com.spaceplanner.booking.service.impl.UserServiceImpl;
+import com.spaceplanner.booking.service.IUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,13 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class userController {
 
     @Autowired
-    private final UserServiceImpl userServiceImpl;
+    private IUserService userService;
 
-    public userController(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
-    }
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@Valid @RequestBody UserDto userDto) {
-        return new ResponseEntity<>(userServiceImpl.registerUser(userDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.CREATED);
     }
 }
