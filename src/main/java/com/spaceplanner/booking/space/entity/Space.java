@@ -1,13 +1,16 @@
 package com.spaceplanner.booking.space.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "spaces")
+
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "spaces")
 public class Space {
         @Id
         @GeneratedValue(strategy= GenerationType.SEQUENCE)

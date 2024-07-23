@@ -23,7 +23,6 @@ public class UserServiceImpl implements IUserService {
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
-        user.setRol(userDto.getRol());
         return userRepository.save(user);
 
     }

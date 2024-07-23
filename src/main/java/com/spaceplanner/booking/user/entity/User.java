@@ -17,6 +17,6 @@ public class User {
     private String email;
     private String Password;
 
-    private Rol Rol;
+
 
 }

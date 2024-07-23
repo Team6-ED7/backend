@@ -145,3 +145,5 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
 - Encriptar contraseña
 - Manejo de errores.
 - Creación de pruebas unitarias.
+
+
