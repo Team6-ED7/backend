@@ -8,7 +8,7 @@
 Como usuario, quiero poder registrarme en la aplicación para poder acceder a todas las funcionalidades.
 
 **Criterios de Aceptación:**
-- El usuario debe poder ingresar su nombre, correo electrónico, contraseña y rol.
+- El usuario debe poder ingresar su nombre, correo electrónico y contraseña.
 - El sistema debe validar que el correo no esté en uso.
 - El sistema debe enviar un correo de verificación.
 
