@@ -147,3 +147,24 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
 - Creación de pruebas unitarias.
 
 
+## ENDPOINT
+- ´ /api/users/register ´
+```json
+ {
+  "name": "string",
+  "lastName": "string",
+  "email": "string",
+  "password": "string"
+  }
+  ```
+
+- /api/spaces/register
+```json
+  {
+  "name": "string",
+  "location": "string",
+  "capacity": "int",
+  "description": "string",
+  "availability": "boolean"
+  }
+```
