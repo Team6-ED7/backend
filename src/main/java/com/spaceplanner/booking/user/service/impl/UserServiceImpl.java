@@ -18,6 +18,7 @@ public class UserServiceImpl implements IUserService {
         if (userRepository.existsByEmail(userDto.getEmail())) {
             throw new RuntimeException("Email already exists");
         }
+
         User user = new User();
         user.setName(userDto.getName());
         user.setLastName(userDto.getLastName());

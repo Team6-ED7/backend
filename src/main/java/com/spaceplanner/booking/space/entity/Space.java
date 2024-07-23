@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+
+import java.util.UUID;
 
 @Entity
 
@@ -19,6 +22,15 @@ public class Space {
         private int floor;
         private String description;
         private boolean available;
+
+        @Column(name = "code_uuid")
+        private UUID codeUuid;
+
+        //Genera el código UUID antes de guardar en la base de datos.
+        @PrePersist
+        private void generateUuidCode() {
+                codeUuid = UUID.randomUUID();
+        }
 
 
 }

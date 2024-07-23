@@ -7,23 +7,28 @@ import com.spaceplanner.booking.space.service.ISpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class SpaceServiceImpl implements ISpaceService {
+
     @Autowired
     private ISpaceRepository spaceRepository;
 
-
     @Override
     public Space registerSpace(SpaceDto spaceDto) {
-    //TODO:create method to check if space already exists. generateUUID for space
+
+        if(spaceRepository.existsSpaceByCodeUuid(spaceDto.getCodeUuid())) {
+            throw new RuntimeException("Space already exists!");
+        }
+
         Space space = new Space();
         space.setName(spaceDto.getName());
         space.setFloor(spaceDto.getFloor());
         space.setDescription(spaceDto.getDescription());
         space.setAvailable(spaceDto.isAvailable());
+//        space.setCodeUuid(UUID.randomUUID());
         return spaceRepository.save(space);
-
-
 
     }
 }
