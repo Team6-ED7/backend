@@ -10,6 +10,5 @@ public class RequestException extends RuntimeException {
         this.code = code;
     }
 
-    public RequestException(String message) {
-    }
+
 }

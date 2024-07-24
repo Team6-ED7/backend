@@ -10,7 +10,7 @@ public class BusinessException extends RequestException {
 
 
     public BusinessException(String code, HttpStatus status, String message) {
-        super(message);
+        super(code, message);
         this.code = code;
         this.status = status;
 

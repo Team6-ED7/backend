@@ -18,7 +18,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User registerUser(UserDto userDto) {
         if (userRepository.existsByEmail(userDto.getEmail())) {
-            throw new BusinessException("409", HttpStatus.CONFLICT, "User already exists");
+            throw new BusinessException("408", HttpStatus.CONFLICT, "User already exists");
         }
 
         User user = new User();
