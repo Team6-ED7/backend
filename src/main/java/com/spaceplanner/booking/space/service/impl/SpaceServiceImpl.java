@@ -29,7 +29,7 @@ public class SpaceServiceImpl implements ISpaceService {
         space.setFloor(spaceDto.getFloor());
         space.setDescription(spaceDto.getDescription());
         space.setAvailable(spaceDto.isAvailable());
-        space.setCodeUuid(UUID.randomUUID());
+//        space.setCodeUuid(UUID.randomUUID());
         return spaceRepository.save(space);
 
     }

@@ -146,6 +146,17 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
 - Manejo de errores (RE8-Handle-errors)
 - Creación de pruebas unitarias (RE9-Create-unit-tests)
 
+## TYPESPACE REGISTRATION (RE)
+- Crear la entidad TypeSpace (TR1-Create-type-space-entity)
+- Crear repositorio (TR2-Create-repository)
+- Crear servicio (TR3-Create-service)
+- Crear controlador (TR4-Create-controller)
+- Crear seguridad (TR5-Create-security)
+- Crear validación (TR6-Create-validation)
+- Encriptar contraseña (TR7-Encrypt-password)
+- Manejo de errores (TR8-Handle-errors)
+- Creación de pruebas unitarias (TR9-Create-unit-tests)
+
 
 
 ## ENDPOINT
