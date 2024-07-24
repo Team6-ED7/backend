@@ -1,11 +1,13 @@
 package com.spaceplanner.booking.space.service.impl;
 
+import com.spaceplanner.booking.Global.exception.BusinessException;
 import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.space.entity.dto.SpaceDto;
 import com.spaceplanner.booking.space.repository.ISpaceRepository;
 import com.spaceplanner.booking.space.service.ISpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 
@@ -19,7 +21,7 @@ public class SpaceServiceImpl implements ISpaceService {
     public Space registerSpace(SpaceDto spaceDto) {
 
         if(spaceRepository.existsSpaceByCodeUuid(spaceDto.getCodeUuid())) {
-            throw new RuntimeException("Space already exists!");
+            throw new BusinessException("409", HttpStatus.CONFLICT, "Space already exists");
         }
 
         Space space = new Space();

@@ -21,6 +21,9 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@Valid @RequestBody UserDto userDto) {
+        if (userDto == null) {
+            throw new RuntimeException("UserDto is null");
+        }
         return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.CREATED);
     }
 }

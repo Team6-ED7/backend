@@ -1,5 +1,6 @@
 package com.spaceplanner.booking.space.controller;
 
+import com.spaceplanner.booking.Global.exception.RequestException;
 import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.space.entity.dto.SpaceDto;
 import com.spaceplanner.booking.space.service.ISpaceService;
@@ -21,6 +22,10 @@ public class SpaceController {
 
     @PostMapping("/register")
     public ResponseEntity<Space> registerSpace(@Valid @RequestBody SpaceDto spaceDto) {
+        if (spaceDto == null) {
+            throw new RequestException("401", "SpaceDto is null");
+        }
+
         return new ResponseEntity<>(spaceService.registerSpace(spaceDto), HttpStatus.CREATED);
     }
 }

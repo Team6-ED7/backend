@@ -113,38 +113,39 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
 - Configuración de docker-compose.yml con mysql
 - Crear la base de datos.
 
-## REGISTRO DE USUARIOS
-- Crear las entidad usuario.
-- Crear repositorio.
-- Crear servicio.
-- Crear controlador.
-- Crear seguridad.
-- Crear validación.
-- Encriptar contraseña
-- Manejo de errores.
-- Creación de pruebas unitarias.
+## USER REGISTRATION (RU)
+- Crear las entidad usuario (RU1-Create-user-entity)
+- Crear repositorio (RU2-Create-repository)
+- Crear servicio (RU3-Create-service)
+- Crear controlador (RU4-Create-controller)
+- Crear seguridad (RU5-Create-security)
+- Crear validación (RU6-Create-validation)
+- Encriptar contraseña (RU7-Encrypt-password)
+- Manejo de errores (RU8-Handle-errors)
+- Creación de pruebas unitarias (RU9-Create-unit-tests)
 
-## INICIO DE SESIÓN
-- Crear endpoint para iniciar sesión.
-- Agregar validaciones de inicio de sesión.
-- Añadir seguridad a la contraseña.
-- Pruebas unitarias.
+## LOGIN (IS)
+- Crear endpoint para iniciar sesión (IS1-Create-login-endpoint)
+- Agregar validaciones de inicio de sesión (IS2-Add-login-validations)
+- Añadir seguridad a la contraseña (IS3-Add-password-security)
+- Pruebas unitarias (IS4-Unit-tests)
 
-## ROLES Y PERMISOS
-- Crear los roles (User, Admin, Guest).
-- Añadir seguridad a la contraseña.
-- Pruebas unitarias.
+## ROLES AND PERMISSIONS (RP)
+- Crear los roles (User, Admin, Guest) (RP1-Create-roles)
+- Añadir seguridad a la contraseña (RP2-Add-password-security)
+- Pruebas unitarias (RP3-Unit-tests)
 
-## REGISTRO DE ESPACIOS
-- Crear las entidad spaces.
-- Crear repositorio.
-- Crear servicio.
-- Crear controlador.
-- Crear seguridad.
-- Crear validación.
-- Encriptar contraseña
-- Manejo de errores.
-- Creación de pruebas unitarias.
+## SPACE REGISTRATION (RE)
+- Crear las entidad spaces (RE1-Create-space-entity)
+- Crear repositorio (RE2-Create-repository)
+- Crear servicio (RE3-Create-service)
+- Crear controlador (RE4-Create-controller)
+- Crear seguridad (RE5-Create-security)
+- Crear validación (RE6-Create-validation)
+- Encriptar contraseña (RE7-Encrypt-password)
+- Manejo de errores (RE8-Handle-errors)
+- Creación de pruebas unitarias (RE9-Create-unit-tests)
+
 
 
 ## ENDPOINT
