@@ -7,4 +7,5 @@ import jakarta.validation.Valid;
 public interface ITypeSpaceService {
 
     TypeSpace registerTypeSpace(@Valid TypeSpaceDto typeSpaceDto);
+
 }
