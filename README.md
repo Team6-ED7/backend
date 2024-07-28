@@ -112,6 +112,7 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
 - Configuración del proyecto, agregar las dependencias necesarias para el proyecto.
 - Configuración de docker-compose.yml con mysql
 - Crear la base de datos.
+- Dockerizar la aplicación. (E1-Create-dockerfile)
 
 ## USER REGISTRATION (RU)
 - Crear las entidad usuario (RU1-Create-user-entity)
@@ -180,3 +181,39 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
   "availability": "boolean"
   }
 ```
+
+# Instrucciones para Ejecutar el Docker Compose
+
+Este documento proporciona los pasos para ejecutar el entorno de Docker que incluye la base de datos MySQL y la aplicación `appbooking` usando `docker-compose`.
+
+## Requisitos Previos
+
+1. **Docker**: Asegúrate de tener Docker instalado en tu máquina. Puedes descargarlo e instalarlo desde [Docker Hub](https://hub.docker.com/).
+2. **Docker Compose**: Necesitarás Docker Compose para gestionar los servicios definidos en el archivo `docker-compose.yml`. Generalmente, Docker Compose se incluye con la instalación de Docker Desktop.
+
+## Paso 1: Clonar el Repositorio
+
+Clona el repositorio que contiene el archivo `docker-compose.yml` y la imagen Docker de la aplicación.
+
+```bash
+git clone https://github.com/Team6-ED7/backend.git
+
+
+cd backend
+
+```
+
+## Paso 2: Ejecutar Docker Compose
+
+Una vez que hayas clonado el repositorio, puedes ejecutar el siguiente comando para iniciar los servicios definidos en el archivo `docker-compose.yml`.
+
+```bash
+docker-compose up -d
+```
+
+Este comando creará y ejecutará los contenedores de Docker para MySQL y la aplicación `appbooking`. La opción `-d` se utiliza para ejecutar los contenedores en segundo plano.
+
+## Paso 3: Utilizar swagger para verificar endpoints
+
+http://localhost:8081/swagger-ui/index.html
+
