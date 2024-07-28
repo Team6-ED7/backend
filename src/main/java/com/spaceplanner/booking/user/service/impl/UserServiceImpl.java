@@ -3,11 +3,14 @@ package com.spaceplanner.booking.user.service.impl;
 import com.spaceplanner.booking.Global.exception.BusinessException;
 import com.spaceplanner.booking.user.entity.User;
 import com.spaceplanner.booking.user.entity.dto.UserDto;
+import com.spaceplanner.booking.user.entity.dto.UserLoginDto;
 import com.spaceplanner.booking.user.repository.IUserRepository;
 import com.spaceplanner.booking.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -30,6 +33,10 @@ public class UserServiceImpl implements IUserService {
 
     }
 
+    @Override
+    public User loginUser(UserLoginDto userLoginDto) {
+        return null;
+    }
 
 
 }
