@@ -1,5 +1,6 @@
 package com.spaceplanner.booking.space.entity;
 
+import com.spaceplanner.booking.typespace.entity.TypeSpace;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,12 +20,17 @@ public class Space {
         @GeneratedValue(strategy= GenerationType.SEQUENCE)
         private Long Id;
         private String name;
-        private int floor;
+        private Integer floor;
         private String description;
+        private Integer capacity;
         private boolean available;
 
         @Column(name = "code_uuid")
         private UUID codeUuid;
+
+        @ManyToOne
+        @JoinColumn
+        private TypeSpace typeSpace;
 
         //Genera el código UUID antes de guardar en la base de datos.
         @PrePersist

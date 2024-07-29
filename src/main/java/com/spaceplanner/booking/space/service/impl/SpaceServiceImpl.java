@@ -5,9 +5,12 @@ import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.space.entity.dto.SpaceDto;
 import com.spaceplanner.booking.space.repository.ISpaceRepository;
 import com.spaceplanner.booking.space.service.ISpaceService;
+import com.spaceplanner.booking.typespace.entity.TypeSpace;
+import com.spaceplanner.booking.typespace.repository.ITypeSpaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -17,6 +20,11 @@ public class SpaceServiceImpl implements ISpaceService {
     @Autowired
     private ISpaceRepository spaceRepository;
 
+    @Autowired
+    private ITypeSpaceRepository typeSpaceRepository;
+//    private ITypeSpaceService typeSpaceService;
+
+    @Transactional()
     @Override
     public Space registerSpace(SpaceDto spaceDto) {
 
@@ -28,9 +36,16 @@ public class SpaceServiceImpl implements ISpaceService {
         space.setName(spaceDto.getName());
         space.setFloor(spaceDto.getFloor());
         space.setDescription(spaceDto.getDescription());
-        space.setAvailable(spaceDto.isAvailable());
+        space.setAvailable(spaceDto.getAvailable());
+        space.setCapacity(spaceDto.getCapacity());
+
+        TypeSpace typeSpace = typeSpaceRepository.findTypeSpaceByName(spaceDto.getTypeSpace());
+        space.setTypeSpace(typeSpace);
+
 //        space.setCodeUuid(UUID.randomUUID());
         return spaceRepository.save(space);
 
     }
+
+
 }
