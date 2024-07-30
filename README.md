@@ -113,6 +113,7 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
 - Configuración de docker-compose.yml con mysql
 - Crear la base de datos.
 - Dockerizar la aplicación. (E1-Create-dockerfile)
+- Habilitar cors (E2-Enabling-cors)
 
 ## USER REGISTRATION (RU)
 - Crear las entidad usuario (RU1-Create-user-entity)
