@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Space {
         @Id
         @GeneratedValue(strategy= GenerationType.SEQUENCE)
-        private Long Id;
+        private Long id;
         private String name;
         private Integer floor;
         private String description;

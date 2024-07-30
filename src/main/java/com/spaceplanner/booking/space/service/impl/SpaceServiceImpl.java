@@ -8,11 +8,12 @@ import com.spaceplanner.booking.space.service.ISpaceService;
 import com.spaceplanner.booking.typespace.entity.TypeSpace;
 import com.spaceplanner.booking.typespace.repository.ITypeSpaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @Service
 public class SpaceServiceImpl implements ISpaceService {
@@ -45,6 +46,11 @@ public class SpaceServiceImpl implements ISpaceService {
 //        space.setCodeUuid(UUID.randomUUID());
         return spaceRepository.save(space);
 
+    }
+
+    @Override
+    public PagedModel<SpaceDto> getSpaces(Pageable pageable) {
+        return new PagedModel<>(spaceRepository.findAllSpaceDto(pageable));
     }
 
 

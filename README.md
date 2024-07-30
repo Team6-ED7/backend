@@ -145,6 +145,7 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
 - Crear validación (RE6-Create-validation)
 - Manejo de errores (RE7-Handle-errors)
 - Creación de pruebas unitarias (RE9-Create-unit-tests)
+- Crear paginación a la entidad Space(RE10-Create-pagination-space)
 
 ## TYPESPACE REGISTRATION (TR)
 - Crear la entidad TypeSpace (TR1-Create-type-space-entity)
