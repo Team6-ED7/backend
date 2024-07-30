@@ -216,3 +216,175 @@ Este comando creará y ejecutará los contenedores de Docker para MySQL y la apl
 
 http://localhost:8081/swagger-ui/index.html
 
+
+# API Documentation
+
+## Overview
+This document provides an overview of the API endpoints available in the project. The API is built using OpenAPI version 3.0.1.
+
+## Base URL
+The base URL for the API is: http://localhost:8081
+
+
+## Endpoints
+
+### User Controller
+
+#### Register User
+- **URL:** `/api/users/register`
+- **Method:** `POST`
+- **Tags:** `user-controller`
+- **Operation ID:** `registerUser`
+- **Request Body:**
+    - **Content Type:** `application/json`
+    - **Schema:** `UserDto`
+    - **Required:** `true`
+- **Response:**
+    - **Status:** `200 OK`
+    - **Content Type:** `*/*`
+    - **Schema:** `User`
+
+#### Login User
+- **URL:** `/api/users/login`
+- **Method:** `POST`
+- **Tags:** `user-controller`
+- **Operation ID:** `loginUser`
+- **Request Body:**
+    - **Content Type:** `application/json`
+    - **Schema:** `UserLoginDto`
+    - **Required:** `true`
+- **Response:**
+    - **Status:** `200 OK`
+    - **Content Type:** `*/*`
+    - **Schema:** `User`
+
+### Type Space Controller
+
+#### Register Type Space
+- **URL:** `/api/typespaces/register`
+- **Method:** `POST`
+- **Tags:** `type-space-controller`
+- **Operation ID:** `registerTypeSpace`
+- **Request Body:**
+    - **Content Type:** `application/json`
+    - **Schema:** `TypeSpaceDto`
+    - **Required:** `true`
+- **Response:**
+    - **Status:** `200 OK`
+    - **Content Type:** `*/*`
+    - **Schema:** `TypeSpace`
+
+### Space Controller
+
+#### Register Space
+- **URL:** `/api/spaces/register`
+- **Method:** `POST`
+- **Tags:** `space-controller`
+- **Operation ID:** `registerSpace`
+- **Request Body:**
+    - **Content Type:** `application/json`
+    - **Schema:** `SpaceDto`
+    - **Required:** `true`
+- **Response:**
+    - **Status:** `200 OK`
+    - **Content Type:** `*/*`
+    - **Schema:** `Space`
+
+#### Find All Spaces
+- **URL:** `/api/spaces`
+- **Method:** `GET`
+- **Tags:** `space-controller`
+- **Operation ID:** `findAll`
+- **Parameters:**
+    - **Name:** `pageable`
+    - **In:** `query`
+    - **Required:** `true`
+    - **Schema:** `Pageable`
+- **Response:**
+    - **Status:** `200 OK`
+    - **Content Type:** `*/*`
+    - **Schema:** `PagedModelSpaceDto`
+
+## Components
+
+### Schemas
+
+#### UserDto
+- **Type:** `object`
+- **Properties:**
+    - **name:** `string`
+    - **lastName:** `string`
+    - **email:** `string`
+    - **password:** `string`
+
+#### User
+- **Type:** `object`
+- **Properties:**
+    - **name:** `string`
+    - **lastName:** `string`
+    - **email:** `string`
+    - **id:** `integer (int64)`
+    - **password:** `string`
+
+#### UserLoginDto
+- **Type:** `object`
+- **Properties:**
+    - **email:** `string`
+    - **password:** `string`
+
+#### TypeSpaceDto
+- **Type:** `object`
+- **Properties:**
+    - **name:** `string`
+
+#### TypeSpace
+- **Type:** `object`
+- **Properties:**
+    - **id:** `integer (int64)`
+    - **name:** `string`
+
+#### SpaceDto
+- **Type:** `object`
+- **Properties:**
+    - **name:** `string`
+    - **floor:** `integer (int32)`
+    - **description:** `string`
+    - **capacity:** `integer (int32)`
+    - **available:** `boolean`
+    - **typeSpace:** `string`
+    - **codeUuid:** `string (uuid)`
+
+#### Space
+- **Type:** `object`
+- **Properties:**
+    - **id:** `integer (int64)`
+    - **name:** `string`
+    - **floor:** `integer (int32)`
+    - **description:** `string`
+    - **capacity:** `integer (int32)`
+    - **available:** `boolean`
+    - **codeUuid:** `string (uuid)`
+    - **typeSpace:** `TypeSpace`
+
+#### Pageable
+- **Type:** `object`
+- **Properties:**
+    - **page:** `integer (int32)`
+    - **size:** `integer (int32)`
+    - **sort:** `array of strings`
+
+#### PageMetadata
+- **Type:** `object`
+- **Properties:**
+    - **size:** `integer (int64)`
+    - **number:** `integer (int64)`
+    - **totalElements:** `integer (int64)`
+    - **totalPages:** `integer (int64)`
+
+#### PagedModelSpaceDto
+- **Type:** `object`
+- **Properties:**
+    - **content:** `array of SpaceDto`
+    - **page:** `PageMetadata`
+
+
