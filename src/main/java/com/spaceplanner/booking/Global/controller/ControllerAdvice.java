@@ -16,15 +16,15 @@ public class ControllerAdvice {
     public ResponseEntity<MessageDto> runtimeExceptionHandler(RuntimeException e) {
 
         //TODO: Implementar log
-        MessageDto messageDto = MessageDto.builder().message(e.getMessage()).build();
-        return new ResponseEntity<>(messageDto, org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR);
+        MessageDto messageDto = MessageDto.builder().code("500").message(e.getMessage()).build();
+        return new ResponseEntity<>(messageDto, HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
     @ExceptionHandler(value = RequestException.class)
     public ResponseEntity<MessageDto> requestExceptionHandler(RequestException e) {
-        MessageDto messageDto = MessageDto.builder().message(e.getMessage()).build();
-        return new ResponseEntity<>(messageDto, org.springframework.http.HttpStatus.BAD_REQUEST);
+        MessageDto messageDto = MessageDto.builder().code(e.getCode()).message(e.getMessage()).build();
+        return new ResponseEntity<>(messageDto, HttpStatus.BAD_REQUEST);
 
 
 
@@ -33,7 +33,7 @@ public class ControllerAdvice {
     @ExceptionHandler(value = BusinessException.class)
     public ResponseEntity<MessageDto> businessExceptionHandler(BusinessException e) {
 
-        MessageDto messageDto = MessageDto.builder().message(e.getMessage()).build();
+        MessageDto messageDto = MessageDto.builder().code(e.getCode()).message(e.getMessage()).build();
         return new ResponseEntity<>(messageDto, HttpStatus.BAD_REQUEST);
 
     }

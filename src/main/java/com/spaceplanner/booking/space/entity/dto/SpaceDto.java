@@ -1,16 +1,23 @@
 package com.spaceplanner.booking.space.entity.dto;
 
-import com.spaceplanner.booking.user.entity.Rol;
+import com.spaceplanner.booking.typespace.entity.TypeSpace;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
-public class SpaceDto {
+@NoArgsConstructor
+@AllArgsConstructor
+public class SpaceDto implements Serializable {
 
     private String name;
-    private int floor;
+    private Integer floor;
     private String description;
-    private boolean available;
+    private Integer capacity;
+    private Boolean available;
+    private String typeSpace;
     private UUID codeUuid;
 }

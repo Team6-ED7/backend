@@ -112,6 +112,7 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
 - Configuración del proyecto, agregar las dependencias necesarias para el proyecto.
 - Configuración de docker-compose.yml con mysql
 - Crear la base de datos.
+- Dockerizar la aplicación. (E1-Create-dockerfile)
 
 ## USER REGISTRATION (RU)
 - Crear las entidad usuario (RU1-Create-user-entity)
@@ -142,9 +143,19 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
 - Crear controlador (RE4-Create-controller)
 - Crear seguridad (RE5-Create-security)
 - Crear validación (RE6-Create-validation)
-- Encriptar contraseña (RE7-Encrypt-password)
-- Manejo de errores (RE8-Handle-errors)
+- Manejo de errores (RE7-Handle-errors)
 - Creación de pruebas unitarias (RE9-Create-unit-tests)
+- Crear paginación a la entidad Space(RE10-Create-pagination-space)
+
+## TYPESPACE REGISTRATION (TR)
+- Crear la entidad TypeSpace (TR1-Create-type-space-entity)
+- Crear repositorio (TR2-Create-repository)
+- Crear servicio (TR3-Create-service)
+- Crear controlador (TR4-Create-controller)
+- Crear seguridad (TR5-Create-security)
+- Crear validación (TR6-Create-validation)
+- Manejo de errores (TR7-Handle-errors)
+- Creación de pruebas unitarias (TR8-Create-unit-tests)
 
 
 
@@ -169,3 +180,211 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
   "availability": "boolean"
   }
 ```
+
+# Instrucciones para Ejecutar el Docker Compose
+
+Este documento proporciona los pasos para ejecutar el entorno de Docker que incluye la base de datos MySQL y la aplicación `appbooking` usando `docker-compose`.
+
+## Requisitos Previos
+
+1. **Docker**: Asegúrate de tener Docker instalado en tu máquina. Puedes descargarlo e instalarlo desde [Docker Hub](https://hub.docker.com/).
+2. **Docker Compose**: Necesitarás Docker Compose para gestionar los servicios definidos en el archivo `docker-compose.yml`. Generalmente, Docker Compose se incluye con la instalación de Docker Desktop.
+
+## Paso 1: Clonar el Repositorio
+
+Clona el repositorio que contiene el archivo `docker-compose.yml` y la imagen Docker de la aplicación.
+
+```bash
+git clone https://github.com/Team6-ED7/backend.git
+
+
+cd backend
+
+```
+
+## Paso 2: Ejecutar Docker Compose
+
+Una vez que hayas clonado el repositorio, puedes ejecutar el siguiente comando para iniciar los servicios definidos en el archivo `docker-compose.yml`.
+
+```bash
+docker-compose up -d
+```
+
+Este comando creará y ejecutará los contenedores de Docker para MySQL y la aplicación `appbooking`. La opción `-d` se utiliza para ejecutar los contenedores en segundo plano.
+
+## Paso 3: Utilizar swagger para verificar endpoints
+
+http://localhost:8081/swagger-ui/index.html
+
+
+# API Documentation
+
+## Overview
+This document provides an overview of the API endpoints available in the project. The API is built using OpenAPI version 3.0.1.
+
+## Base URL
+The base URL for the API is: http://localhost:8081
+
+
+## Endpoints
+
+### User Controller
+
+#### Register User
+- **URL:** `/api/users/register`
+- **Method:** `POST`
+- **Tags:** `user-controller`
+- **Operation ID:** `registerUser`
+- **Request Body:**
+    - **Content Type:** `application/json`
+    - **Schema:** `UserDto`
+    - **Required:** `true`
+- **Response:**
+    - **Status:** `200 OK`
+    - **Content Type:** `*/*`
+    - **Schema:** `User`
+
+#### Login User
+- **URL:** `/api/users/login`
+- **Method:** `POST`
+- **Tags:** `user-controller`
+- **Operation ID:** `loginUser`
+- **Request Body:**
+    - **Content Type:** `application/json`
+    - **Schema:** `UserLoginDto`
+    - **Required:** `true`
+- **Response:**
+    - **Status:** `200 OK`
+    - **Content Type:** `*/*`
+    - **Schema:** `User`
+
+### Type Space Controller
+
+#### Register Type Space
+- **URL:** `/api/typespaces/register`
+- **Method:** `POST`
+- **Tags:** `type-space-controller`
+- **Operation ID:** `registerTypeSpace`
+- **Request Body:**
+    - **Content Type:** `application/json`
+    - **Schema:** `TypeSpaceDto`
+    - **Required:** `true`
+- **Response:**
+    - **Status:** `200 OK`
+    - **Content Type:** `*/*`
+    - **Schema:** `TypeSpace`
+
+### Space Controller
+
+#### Register Space
+- **URL:** `/api/spaces/register`
+- **Method:** `POST`
+- **Tags:** `space-controller`
+- **Operation ID:** `registerSpace`
+- **Request Body:**
+    - **Content Type:** `application/json`
+    - **Schema:** `SpaceDto`
+    - **Required:** `true`
+- **Response:**
+    - **Status:** `200 OK`
+    - **Content Type:** `*/*`
+    - **Schema:** `Space`
+
+#### Find All Spaces
+- **URL:** `/api/spaces`
+- **Method:** `GET`
+- **Tags:** `space-controller`
+- **Operation ID:** `findAll`
+- **Parameters:**
+    - **Name:** `pageable`
+    - **In:** `query`
+    - **Required:** `true`
+    - **Schema:** `Pageable`
+- **Response:**
+    - **Status:** `200 OK`
+    - **Content Type:** `*/*`
+    - **Schema:** `PagedModelSpaceDto`
+
+## Components
+
+### Schemas
+
+#### UserDto
+- **Type:** `object`
+- **Properties:**
+    - **name:** `string`
+    - **lastName:** `string`
+    - **email:** `string`
+    - **password:** `string`
+
+#### User
+- **Type:** `object`
+- **Properties:**
+    - **name:** `string`
+    - **lastName:** `string`
+    - **email:** `string`
+    - **id:** `integer (int64)`
+    - **password:** `string`
+
+#### UserLoginDto
+- **Type:** `object`
+- **Properties:**
+    - **email:** `string`
+    - **password:** `string`
+
+#### TypeSpaceDto
+- **Type:** `object`
+- **Properties:**
+    - **name:** `string`
+
+#### TypeSpace
+- **Type:** `object`
+- **Properties:**
+    - **id:** `integer (int64)`
+    - **name:** `string`
+
+#### SpaceDto
+- **Type:** `object`
+- **Properties:**
+    - **name:** `string`
+    - **floor:** `integer (int32)`
+    - **description:** `string`
+    - **capacity:** `integer (int32)`
+    - **available:** `boolean`
+    - **typeSpace:** `string`
+    - **codeUuid:** `string (uuid)`
+
+#### Space
+- **Type:** `object`
+- **Properties:**
+    - **id:** `integer (int64)`
+    - **name:** `string`
+    - **floor:** `integer (int32)`
+    - **description:** `string`
+    - **capacity:** `integer (int32)`
+    - **available:** `boolean`
+    - **codeUuid:** `string (uuid)`
+    - **typeSpace:** `TypeSpace`
+
+#### Pageable
+- **Type:** `object`
+- **Properties:**
+    - **page:** `integer (int32)`
+    - **size:** `integer (int32)`
+    - **sort:** `array of strings`
+
+#### PageMetadata
+- **Type:** `object`
+- **Properties:**
+    - **size:** `integer (int64)`
+    - **number:** `integer (int64)`
+    - **totalElements:** `integer (int64)`
+    - **totalPages:** `integer (int64)`
+
+#### PagedModelSpaceDto
+- **Type:** `object`
+- **Properties:**
+    - **content:** `array of SpaceDto`
+    - **page:** `PageMetadata`
+
+

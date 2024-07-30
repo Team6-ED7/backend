@@ -2,6 +2,7 @@ package com.spaceplanner.booking.user.controller;
 
 import com.spaceplanner.booking.user.entity.User;
 import com.spaceplanner.booking.user.entity.dto.UserDto;
+import com.spaceplanner.booking.user.entity.dto.UserLoginDto;
 import com.spaceplanner.booking.user.service.IUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,15 @@ public class UserController {
             throw new RuntimeException("UserDto is null");
         }
         return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.CREATED);
+    }
+
+
+    //TODO: Implement jwt token - Security - validation
+    @PostMapping("/login")
+    public ResponseEntity<User> loginUser(@Valid @RequestBody UserLoginDto userLoginDto) {
+        if (userLoginDto == null) {
+            throw new RuntimeException("UserLoginDto is null");
+        }
+        return new ResponseEntity<>(userService.loginUser(userLoginDto), HttpStatus.OK);
     }
 }
