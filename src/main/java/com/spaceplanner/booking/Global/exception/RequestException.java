@@ -1,8 +1,13 @@
 package com.spaceplanner.booking.Global.exception;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+
+@Getter
+@Setter
+
 public class RequestException extends RuntimeException {
     private String code;
     public RequestException(String code, String message) {

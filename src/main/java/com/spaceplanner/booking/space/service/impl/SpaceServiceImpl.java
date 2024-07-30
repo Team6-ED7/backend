@@ -8,7 +8,6 @@ import com.spaceplanner.booking.space.service.ISpaceService;
 import com.spaceplanner.booking.typespace.entity.TypeSpace;
 import com.spaceplanner.booking.typespace.repository.ITypeSpaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
@@ -32,6 +31,8 @@ public class SpaceServiceImpl implements ISpaceService {
         if(spaceRepository.existsSpaceByCodeUuid(spaceDto.getCodeUuid())) {
             throw new BusinessException("409", HttpStatus.CONFLICT, "Space already exists");
         }
+
+
 
         Space space = new Space();
         space.setName(spaceDto.getName());
