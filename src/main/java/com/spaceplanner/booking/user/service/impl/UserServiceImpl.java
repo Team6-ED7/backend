@@ -35,7 +35,13 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User loginUser(UserLoginDto userLoginDto) {
-        return null;
+        Optional<User> user = userRepository.findByEmail(userLoginDto.getEmail());
+        if (user.isPresent()) {
+            if (user.get().getPassword().equals(userLoginDto.getPassword())) {
+                return user.get();
+            }
+        }
+        throw new BusinessException("401", HttpStatus.UNAUTHORIZED, "Invalid credentials");
     }
 
 
