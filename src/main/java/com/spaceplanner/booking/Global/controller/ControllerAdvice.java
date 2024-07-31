@@ -6,10 +6,12 @@ import com.spaceplanner.booking.Global.exception.BusinessException;
 import com.spaceplanner.booking.Global.exception.RequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
+@CrossOrigin(origins = "*")
 public class ControllerAdvice {
 
     @ExceptionHandler(value = RuntimeException.class)

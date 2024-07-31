@@ -20,10 +20,21 @@ services:
       - "8081:8081"
     depends_on:
       - db
+      - keycloak
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/db
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: changeme
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    restart: always
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    command: start-dev
 
 volumes:
   my-db:

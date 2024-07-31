@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/spaces")
+@CrossOrigin(origins = "*")
 public class SpaceController {
 
     @Autowired
