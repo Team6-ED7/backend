@@ -1,6 +1,8 @@
 package com.spaceplanner.booking.user.service.impl;
 
 import com.spaceplanner.booking.Global.exception.BusinessException;
+import com.spaceplanner.booking.Global.exceptionhandler.ModelAlreadyExistsException;
+import com.spaceplanner.booking.Global.exceptionhandler.ModelNotFoundException;
 import com.spaceplanner.booking.user.entity.User;
 import com.spaceplanner.booking.user.entity.dto.UserDto;
 import com.spaceplanner.booking.user.entity.dto.UserLoginDto;
@@ -19,9 +21,9 @@ public class UserServiceImpl implements IUserService {
     private IUserRepository userRepository;
 
     @Override
-    public User registerUser(UserDto userDto) {
+    public User registerUser(UserDto userDto) throws Exception {
         if (userRepository.existsByEmail(userDto.getEmail())) {
-            throw new BusinessException("408", HttpStatus.CONFLICT, "User already exists");
+            throw new ModelAlreadyExistsException("Email already exists");
         }
 
         User user = new User();
@@ -34,14 +36,16 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User loginUser(UserLoginDto userLoginDto) {
+    public User loginUser(UserLoginDto userLoginDto) throws Exception{
         Optional<User> user = userRepository.findByEmail(userLoginDto.getEmail());
+
         if (user.isPresent()) {
-            if (user.get().getPassword().equals(userLoginDto.getPassword())) {
+            if (user.get().getPassword().equals(userLoginDto.getPassword()) && user.get().getEmail().equals(userLoginDto.getEmail()) ) {
                 return user.get();
             }
         }
-        throw new BusinessException("401", HttpStatus.UNAUTHORIZED, "Invalid credentials");
+//        throw new BusinessException("401", HttpStatus.UNAUTHORIZED, "Invalid credentials");
+        throw new ModelNotFoundException("Invalid credentials");
     }
 
 
