@@ -2,6 +2,7 @@ package com.spaceplanner.booking.space.entity.dto;
 
 import com.spaceplanner.booking.typespace.entity.TypeSpace;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class SpaceDto implements Serializable {
     @NotBlank(message = "Name is required")
     private String name;
 
+    @NotNull
     @Positive(message = "Floor is required")
     private Integer floor;
 

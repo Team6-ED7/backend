@@ -11,6 +11,6 @@ import jakarta.validation.Valid;
 public interface  IUserService {
 
     User registerUser(@Valid UserDto userDto) throws Exception;
-    User loginUser(@Valid UserLoginDto userLoginDto) throws Exception;
+    String loginUser(@Valid UserLoginDto userLoginDto) throws Exception;
 
 }

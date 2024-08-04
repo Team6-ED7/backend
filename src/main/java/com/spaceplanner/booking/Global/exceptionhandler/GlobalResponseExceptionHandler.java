@@ -45,9 +45,17 @@ public class GlobalResponseExceptionHandler extends ResponseEntityExceptionHandl
     }
 
     @ExceptionHandler(Exception.class)
-    public final ResponseEntity<ErrorMessage> handleAllExceptions(Exception ex, WebRequest request) {
+    public final ResponseEntity<ErrorMessage> handleAllExceptions(Exception ex) {
         ErrorMessage message = new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
     }
+
+    @ExceptionHandler(NumberFormatException.class)
+    public final ResponseEntity<ErrorMessage> handleAllExceptions(NumberFormatException ex) {
+        ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST, "El valor proporcionado debe de ser un número");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+    }
+
+
 
 }

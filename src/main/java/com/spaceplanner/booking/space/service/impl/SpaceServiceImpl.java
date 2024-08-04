@@ -27,7 +27,7 @@ public class SpaceServiceImpl implements ISpaceService {
 
     @Transactional()
     @Override
-    public Space registerSpace(SpaceDto spaceDto) {
+    public Space registerSpace(SpaceDto spaceDto) throws Exception {
 
         if(spaceRepository.existsSpaceByCodeUuid(spaceDto.getCodeUuid())) {
             throw new ModelAlreadyExistsException("Space already exists");
@@ -41,6 +41,11 @@ public class SpaceServiceImpl implements ISpaceService {
         space.setCapacity(spaceDto.getCapacity());
 
         TypeSpace typeSpace = typeSpaceRepository.findTypeSpaceByName(spaceDto.getTypeSpace());
+
+        if(typeSpace == null) {
+            throw new ModelNotFoundException("Type Space not found");
+        }
+
         space.setTypeSpace(typeSpace);
 
         return spaceRepository.save(space);
