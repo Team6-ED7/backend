@@ -26,4 +26,5 @@ public class UserDto {
     @Size(min = 8, max = 100, message = "Password must be a minimum of 8 and a maximum of 100 characters.")
     private String password;
 
+
 }

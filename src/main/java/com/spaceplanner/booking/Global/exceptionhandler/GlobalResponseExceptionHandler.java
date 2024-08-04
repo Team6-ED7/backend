@@ -20,8 +20,8 @@ public class GlobalResponseExceptionHandler extends ResponseEntityExceptionHandl
 
     @ExceptionHandler(ModelNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorMessage> modelNotFoundException(ModelNotFoundException exception, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage(), request.getDescription(false));
+    public ResponseEntity<ErrorMessage> modelNotFoundException(ModelNotFoundException exception) {
+        ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
@@ -38,15 +38,15 @@ public class GlobalResponseExceptionHandler extends ResponseEntityExceptionHandl
 
     @ExceptionHandler(ModelAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<ErrorMessage> modelAlreadyExistException(ModelAlreadyExistsException exception, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT, exception.getMessage(), request.getDescription(false));
+    public ResponseEntity<ErrorMessage> modelAlreadyExistException(ModelAlreadyExistsException exception) {
+        ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT, exception.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
 
     }
 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ErrorMessage> handleAllExceptions(Exception ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), request.getDescription(false));
+        ErrorMessage message = new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
     }
 

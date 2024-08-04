@@ -1,6 +1,5 @@
 package com.spaceplanner.booking.user.service.impl;
 
-import com.spaceplanner.booking.Global.exception.BusinessException;
 import com.spaceplanner.booking.Global.exceptionhandler.ModelAlreadyExistsException;
 import com.spaceplanner.booking.Global.exceptionhandler.ModelNotFoundException;
 import com.spaceplanner.booking.user.entity.User;
@@ -9,7 +8,6 @@ import com.spaceplanner.booking.user.entity.dto.UserLoginDto;
 import com.spaceplanner.booking.user.repository.IUserRepository;
 import com.spaceplanner.booking.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
