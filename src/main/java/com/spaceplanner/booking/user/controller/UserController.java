@@ -31,10 +31,10 @@ public class UserController {
 
     //TODO: Implement jwt token - Security - validation
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@Valid @RequestBody UserLoginDto userLoginDto) throws Exception{
+    public String loginUser(@Valid @RequestBody UserLoginDto userLoginDto) throws Exception{
 //        if (userLoginDto == null) {
 //            throw new RuntimeException("UserLoginDto is null");
 //        }
-        return new ResponseEntity<>(userService.loginUser(userLoginDto), HttpStatus.OK);
+        return String.valueOf(new ResponseEntity<>(userService.loginUser(userLoginDto), HttpStatus.OK));
     }
 }

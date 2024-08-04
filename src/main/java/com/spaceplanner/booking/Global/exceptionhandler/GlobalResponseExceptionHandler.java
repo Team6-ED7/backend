@@ -50,10 +50,11 @@ public class GlobalResponseExceptionHandler extends ResponseEntityExceptionHandl
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
     }
 
-    @ExceptionHandler(NumberFormatException.class)
-    public final ResponseEntity<ErrorMessage> handleAllExceptions(NumberFormatException ex) {
-        ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST, "El valor proporcionado debe de ser un número");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+    @ExceptionHandler(ModelUnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<ErrorMessage> unauthorizedException(ModelUnauthorizedException exception) {
+        ErrorMessage message = new ErrorMessage(HttpStatus.UNAUTHORIZED, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
     }
 
 
