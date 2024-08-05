@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin("*")
 public class UserController {
 
     @Autowired
@@ -25,7 +24,7 @@ public class UserController {
 
     //TODO: Implement jwt token - Security - validation
     @PostMapping("/login")
-    public ResponseEntity<Object> loginUser(@Valid @RequestBody UserLoginDto userLoginDto) throws Exception{
+    public ResponseEntity<User> loginUser(@Valid @RequestBody UserLoginDto userLoginDto) throws Exception{
         return new ResponseEntity<>(userService.loginUser(userLoginDto), HttpStatus.OK);
     }
 }

@@ -9,8 +9,6 @@ import com.spaceplanner.booking.user.entity.dto.UserLoginDto;
 import com.spaceplanner.booking.user.repository.IUserRepository;
 import com.spaceplanner.booking.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -35,7 +33,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public String loginUser(UserLoginDto userLoginDto) throws Exception {
+    public User loginUser(UserLoginDto userLoginDto) throws Exception {
         Optional<User> user = userRepository.findByEmail(userLoginDto.getEmail());
 
         if (user.isPresent()) {
@@ -43,7 +41,7 @@ public class UserServiceImpl implements IUserService {
 //                return new RequestException("405", "User logged in");
 //                throw new ModelUnauthorizedException("User logged in");
 //                return ResponseEntity.status(HttpStatus.OK).body("User logged in");
-                return "User logged in";
+                return user.get();
 
             } else {
 //                throw new ModelNotFoundException("401", HttpStatus.UNAUTHORIZED, "Invalid password");
@@ -61,6 +59,4 @@ public class UserServiceImpl implements IUserService {
             throw new ModelNotFoundException("User not found");
         }
     }
-
-
 }

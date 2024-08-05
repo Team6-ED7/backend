@@ -9,6 +9,6 @@ import org.springframework.http.ResponseEntity;
 public interface  IUserService {
 
     User registerUser(@Valid UserDto userDto) throws Exception;
-    String loginUser(@Valid UserLoginDto userLoginDto) throws Exception;
+    User loginUser(@Valid UserLoginDto userLoginDto) throws Exception;
 
 }
