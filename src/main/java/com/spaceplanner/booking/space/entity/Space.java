@@ -23,7 +23,7 @@ public class Space {
         private Integer floor;
         private String description;
         private Integer capacity;
-        private boolean available;
+        private Boolean available;
 
         @Column(name = "code_uuid")
         private UUID codeUuid;

@@ -8,10 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -21,20 +18,13 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@Valid @RequestBody UserDto userDto) {
-        if (userDto == null) {
-            throw new RuntimeException("UserDto is null");
-        }
+    public ResponseEntity<User> registerUser(@Valid @RequestBody UserDto userDto) throws Exception {
         return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.CREATED);
     }
 
-
     //TODO: Implement jwt token - Security - validation
     @PostMapping("/login")
-    public ResponseEntity<User> loginUser(@Valid @RequestBody UserLoginDto userLoginDto) {
-        if (userLoginDto == null) {
-            throw new RuntimeException("UserLoginDto is null");
-        }
+    public ResponseEntity<User> loginUser(@Valid @RequestBody UserLoginDto userLoginDto) throws Exception{
         return new ResponseEntity<>(userService.loginUser(userLoginDto), HttpStatus.OK);
     }
 }
