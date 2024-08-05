@@ -1,12 +1,10 @@
 package com.spaceplanner.booking.user.service;
 
-import com.spaceplanner.booking.Global.exceptionhandler.ModelAlreadyExistsException;
-import com.spaceplanner.booking.Global.exceptionhandler.ModelNotFoundException;
 import com.spaceplanner.booking.user.entity.User;
-
 import com.spaceplanner.booking.user.entity.dto.UserDto;
 import com.spaceplanner.booking.user.entity.dto.UserLoginDto;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 
 public interface  IUserService {
 
