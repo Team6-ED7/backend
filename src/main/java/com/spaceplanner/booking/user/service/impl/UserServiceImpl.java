@@ -20,7 +20,7 @@ public class UserServiceImpl implements IUserService {
     private IUserRepository userRepository;
 
     @Override
-    public User registerUser(UserDto userDto) throws Exception {
+    public void registerUser(UserDto userDto) throws Exception {
         if (userRepository.existsByEmail(userDto.getEmail())) {
             throw new ModelAlreadyExistsException("Email already exists");
         }
@@ -29,7 +29,7 @@ public class UserServiceImpl implements IUserService {
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override
@@ -41,6 +41,7 @@ public class UserServiceImpl implements IUserService {
 //                return new RequestException("405", "User logged in");
 //                throw new ModelUnauthorizedException("User logged in");
 //                return ResponseEntity.status(HttpStatus.OK).body("User logged in");
+
                 return user.get();
 
             } else {
@@ -59,4 +60,5 @@ public class UserServiceImpl implements IUserService {
             throw new ModelNotFoundException("User not found");
         }
     }
+
 }

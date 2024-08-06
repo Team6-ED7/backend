@@ -18,8 +18,9 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@Valid @RequestBody UserDto userDto) throws Exception {
-        return new ResponseEntity<>(userService.registerUser(userDto), HttpStatus.CREATED);
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody UserDto userDto) throws Exception {
+        userService.registerUser(userDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     //TODO: Implement jwt token - Security - validation
@@ -27,4 +28,5 @@ public class UserController {
     public ResponseEntity<User> loginUser(@Valid @RequestBody UserLoginDto userLoginDto) throws Exception{
         return new ResponseEntity<>(userService.loginUser(userLoginDto), HttpStatus.OK);
     }
+
 }
