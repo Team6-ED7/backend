@@ -26,7 +26,5 @@ public class RoleEntity {
     @JoinTable(name = "role_permissions", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private Set<PermissionEntity> permissionList = new HashSet<>();
 
-    public RoleEntity orElseThrow(Object rolUserNoEncontrado) {
-        return null;
-    }
+
 }

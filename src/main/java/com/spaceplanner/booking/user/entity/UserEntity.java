@@ -35,6 +35,9 @@ public class UserEntity {
     @Column(name = "account_no_locked")
     private boolean accountNoLocked;
 
+    @Column(name = "credential_No_Expired" )
+    private boolean credentialNoExpired;
+
     @Enumerated(EnumType.STRING)
     private RoleEnum roleEnum = RoleEnum.USER;
 
