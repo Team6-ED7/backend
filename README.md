@@ -115,7 +115,7 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
 - Dockerizar la aplicación. (E1-Create-dockerfile)
 
 ## USER REGISTRATION (RU)
-- Crear las entidad usuario (RU1-Create-user-entity)
+- Crear las entidad usuario (RU1-Create-userEntity-entity)
 - Crear repositorio (RU2-Create-repository)
 - Crear servicio (RU3-Create-service)
 - Crear controlador (RU4-Create-controller)
@@ -233,7 +233,7 @@ The base URL for the API is: http://localhost:8081
 #### Register User
 - **URL:** `/api/users/register`
 - **Method:** `POST`
-- **Tags:** `user-controller`
+- **Tags:** `userEntity-controller`
 - **Operation ID:** `registerUser`
 - **Request Body:**
     - **Content Type:** `application/json`
@@ -247,7 +247,7 @@ The base URL for the API is: http://localhost:8081
 #### Login User
 - **URL:** `/api/users/login`
 - **Method:** `POST`
-- **Tags:** `user-controller`
+- **Tags:** `userEntity-controller`
 - **Operation ID:** `loginUser`
 - **Request Body:**
     - **Content Type:** `application/json`
