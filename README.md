@@ -122,6 +122,7 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
 - Crear seguridad (RU5-Create-security)
 - Crear validación (RU6-Create-validation)
 - Encriptar contraseña (RU7-Encrypt-password)
+- Implementar JWT (RU10-Implement-jwt)
 - Manejo de errores (RU8-Handle-errors)
 - Creación de pruebas unitarias (RU9-Create-unit-tests)
 

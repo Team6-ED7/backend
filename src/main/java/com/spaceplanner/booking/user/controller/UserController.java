@@ -36,10 +36,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserEntity> loginUser(@Valid @RequestBody UserLoginDto userLoginDto) {
-
-        // Retrieve the authenticated user
-        UserEntity userEntity = userService.loginUser(userLoginDto);
-        return new ResponseEntity<>(userEntity, HttpStatus.OK);
+    public ResponseEntity<String> loginUser(@Valid @RequestBody UserLoginDto userLoginDto) {
+        // Authenticate the user
+        String jwtToken = userService.loginUser(userLoginDto);
+        return new ResponseEntity<>(jwtToken, HttpStatus.OK);
     }
 }

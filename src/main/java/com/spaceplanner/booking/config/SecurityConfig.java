@@ -1,7 +1,9 @@
 package com.spaceplanner.booking.config;
 
+import com.spaceplanner.booking.Global.util.JwtUtils;
 import com.spaceplanner.booking.user.service.impl.UserDetailServiceImpl;
 import net.bytebuddy.asm.AsmVisitorWrapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,11 +23,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -44,7 +50,7 @@ public class SecurityConfig {
 
                     auth.anyRequest().authenticated();
                 })
-                .httpBasic(Customizer.withDefaults())  // Use basic auth, replace with JWT or OAuth2 for production
+                .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)
                 .build();
     }
 

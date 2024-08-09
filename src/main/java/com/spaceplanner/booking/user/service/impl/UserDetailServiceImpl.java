@@ -1,6 +1,6 @@
 package com.spaceplanner.booking.user.service.impl;
 
-import com.spaceplanner.booking.user.entity.RoleEntity;
+import com.spaceplanner.booking.Global.util.JwtUtils;
 import com.spaceplanner.booking.user.entity.RoleEnum;
 import com.spaceplanner.booking.user.entity.UserEntity;
 
@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
@@ -29,7 +28,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Autowired
     private IUserRepository userRepository;
 
-
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -65,12 +65,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return userRepository.save(userEntity);
     }
 
-    public UserEntity loginUser(UserLoginDto userLoginDto) {
+    public String loginUser(UserLoginDto userLoginDto) {
         UserEntity userEntity = userRepository.findByEmail(userLoginDto.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User " + userLoginDto.getEmail() + " not found."));
         if (!passwordEncoder.matches(userLoginDto.getPassword(), userEntity.getPassword())) {
             throw new BadCredentialsException("Invalid password.");
         }
-        return userEntity;
+        // Generate JWT token
+        return jwtUtils.createToken(loadUserByUsername(userLoginDto.getEmail()));
     }
 }
