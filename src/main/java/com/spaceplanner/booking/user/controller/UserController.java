@@ -37,12 +37,6 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<UserEntity> loginUser(@Valid @RequestBody UserLoginDto userLoginDto) {
-        // Authenticate user
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPassword()));
-
-        // Set authentication in the security context
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Retrieve the authenticated user
         UserEntity userEntity = userService.loginUser(userLoginDto);

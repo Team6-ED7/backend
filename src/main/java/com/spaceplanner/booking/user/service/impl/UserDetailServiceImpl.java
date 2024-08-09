@@ -39,25 +39,14 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("El usuario " + email + " no existe."));
-
+                .orElseThrow(() -> new UsernameNotFoundException("User " + email + " not found."));
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
-
-        userEntity.getRoles()
-                .forEach(role -> authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(role.getRoleEnum().name()))));
-
+        userEntity.getRoles().forEach(role -> authorityList.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleEnum().name())));
         userEntity.getRoles().stream()
                 .flatMap(role -> role.getPermissionList().stream())
                 .forEach(permission -> authorityList.add(new SimpleGrantedAuthority(permission.getName())));
-
-
-        return new User(userEntity.getEmail(),
-                userEntity.getPassword(),
-                userEntity.isEnabled(),
-                userEntity.isAccountNoExpired(),
-                userEntity.isCredentialNoExpired(),
-                userEntity.isAccountNoLocked(),
-                authorityList);
+        return new User(userEntity.getEmail(), passwordEncoder.encode(userEntity.getPassword()), userEntity.isEnabled(),
+                userEntity.isAccountNoExpired(), userEntity.isCredentialNoExpired(), userEntity.isAccountNoLocked(), authorityList);
     }
 
     public UserEntity registerUser(UserDto userDto) {
@@ -73,24 +62,15 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .credentialNoExpired(true)
                 .roleEnum(RoleEnum.USER)
                 .build();
-
-        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-
         return userRepository.save(userEntity);
     }
 
     public UserEntity loginUser(UserLoginDto userLoginDto) {
-        // Buscar al usuario por email
         UserEntity userEntity = userRepository.findByEmail(userLoginDto.getEmail())
-                .orElseThrow(() -> new UsernameNotFoundException("El usuario " + userLoginDto.getEmail() + " no existe."));
-
-        // Verificar la contraseña
+                .orElseThrow(() -> new UsernameNotFoundException("User " + userLoginDto.getEmail() + " not found."));
         if (!passwordEncoder.matches(userLoginDto.getPassword(), userEntity.getPassword())) {
-            throw new BadCredentialsException("Contraseña incorrecta.");
+            throw new BadCredentialsException("Invalid password.");
         }
-
-        // Devolver el usuario si las credenciales son correctas
         return userEntity;
-
     }
 }
