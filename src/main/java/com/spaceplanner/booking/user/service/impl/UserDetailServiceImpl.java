@@ -9,6 +9,7 @@ import com.spaceplanner.booking.user.entity.dto.UserDto;
 import com.spaceplanner.booking.user.entity.dto.UserLoginDto;
 import com.spaceplanner.booking.user.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -68,7 +69,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .password(userDto.getPassword())
                 .isEnabled(true)
                 .accountNoExpired(true)
-                .accountNoLocked(false)
+                .accountNoLocked(true)
                 .credentialNoExpired(true)
                 .roleEnum(RoleEnum.USER)
                 .build();
@@ -79,7 +80,17 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     public UserEntity loginUser(UserLoginDto userLoginDto) {
-        return userRepository.findByEmail(userLoginDto.getEmail())
+        // Buscar al usuario por email
+        UserEntity userEntity = userRepository.findByEmail(userLoginDto.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("El usuario " + userLoginDto.getEmail() + " no existe."));
+
+        // Verificar la contraseña
+        if (!passwordEncoder.matches(userLoginDto.getPassword(), userEntity.getPassword())) {
+            throw new BadCredentialsException("Contraseña incorrecta.");
+        }
+
+        // Devolver el usuario si las credenciales son correctas
+        return userEntity;
+
     }
 }
