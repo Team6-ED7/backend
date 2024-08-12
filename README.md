@@ -158,6 +158,28 @@ Como usuario, quiero poder ver una lista de todas mis reservas para poder gestio
 - Manejo de errores (TR7-Handle-errors)
 - Creación de pruebas unitarias (TR8-Create-unit-tests)
 
+## GESTIÓN DE RESERVAS (RS)
+
+### Crear Reserva
+
+- **Crear la entidad Reserva (RS1-Create-reservation-entity):** Definir la entidad `Reservation` con atributos como `id`, `space`, `user`, `startTime`, `endTime`, `status`, y otros campos relevantes.
+- **Crear repositorio (RS2-Create-repository):** Crear el repositorio para la entidad `Reservation`, extendiendo de `JpaRepository` o similar, para manejar las operaciones de CRUD.
+- **Crear servicio (RS3-Create-service):** Desarrollar el servicio que gestione la lógica de negocio relacionada con la creación y verificación de reservas.
+- **Crear controlador (RS4-Create-controller):** Implementar el controlador que exponga los endpoints necesarios para crear reservas, validar disponibilidad, y confirmar reservas.
+- **Crear validación (RS5-Create-validation):** Añadir validaciones para asegurar que la información proporcionada por el usuario (como fechas y espacios) es válida y consistente.
+- **Manejo de errores (RS6-Handle-errors):** Implementar el manejo de errores para gestionar casos en los que no haya disponibilidad o los datos proporcionados sean incorrectos.
+- **Crear notificaciones (RS7-Create-notifications):** Desarrollar un sistema para notificar a los usuarios sobre el estado de su reserva (confirmación, rechazo, etc.).
+- **Creación de pruebas unitarias (RS8-Create-unit-tests):** Crear pruebas unitarias para asegurar que la lógica de reserva funciona correctamente en diferentes escenarios.
+
+### Ver Reservas
+
+- **Crear el servicio de consulta de reservas (RS9-Create-reservation-query-service):** Desarrollar el servicio que permita a los usuarios ver sus reservas activas y pasadas.
+- **Crear controlador para la visualización de reservas (RS10-Create-reservation-query-controller):** Implementar el controlador que exponga los endpoints necesarios para que los usuarios puedan consultar sus reservas.
+- **Añadir seguridad para la visualización de reservas (RS11-Add-security-reservation-query):** Asegurar que solo los usuarios autorizados puedan ver y gestionar sus reservas.
+- **Manejo de errores en consulta de reservas (RS12-Handle-errors-reservation-query):** Implementar manejo de errores en el proceso de consulta de reservas, como cuando un usuario intenta acceder a una reserva que no le pertenece.
+- **Creación de pruebas unitarias para la consulta de reservas (RS13-Create-unit-tests-reservation-query):** Crear pruebas unitarias para asegurar que la funcionalidad de consulta de reservas opera correctamente.
+
+
 
 
 ## ENDPOINT
