@@ -5,6 +5,7 @@ import com.spaceplanner.booking.Global.exceptionhandler.ModelAlreadyExistsExcept
 import com.spaceplanner.booking.Global.exceptionhandler.ModelNotFoundException;
 import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.space.entity.dto.SpaceDto;
+import com.spaceplanner.booking.space.entity.dto.TypeSpaceEnum;
 import com.spaceplanner.booking.space.repository.ISpaceRepository;
 import com.spaceplanner.booking.space.service.ISpaceService;
 import com.spaceplanner.booking.typespace.entity.TypeSpace;
@@ -26,20 +27,37 @@ public class SpaceServiceImpl implements ISpaceService {
     private ITypeSpaceRepository typeSpaceRepository;
 
     @Transactional()
-    @Override
-    public Space registerSpace(SpaceDto spaceDto) throws Exception {
+ /*   @Override*/
+
+
+    public Space registerSpace(String typeSpace, int floor, int qty ) throws Exception {
 /*
         if(spaceRepository.existsSpaceByCodeUuid(spaceDto.getCodeUuid())) {
             throw new ModelAlreadyExistsException("Space already exists");
         }*/
 
-        Space space = new Space();
-        space.setName(spaceDto.getName());
+       Space space = new Space();
+       space.setName(typeSpace.split("\\(")[0].trim()
+
+               .concat(String.valueOf(floor))
+
+               .concat(String.valueOf(qty)));
+       space.setFloor(floor);
+
+       space.setDescription(extractDescription(typeSpace));
+         space.setCapacity(1);
+            space.setAvailable(true);
+            space.setTypeSpace(TypeSpaceEnum.valueOf(typeSpace.split("\\(")[0].trim()));
+
+
+
+
+ /*        space.setName(spaceDto.getName());
         space.setFloor(spaceDto.getFloor());
         space.setDescription(spaceDto.getDescription());
         space.setAvailable(spaceDto.getAvailable());
         space.setCapacity(spaceDto.getCapacity());
-        space.setTypeSpace(spaceDto.getTypeSpace());
+        space.setTypeSpace(spaceDto.getTypeSpace());*/
 
      /*   TypeSpace typeSpace = typeSpaceRepository.findTypeSpaceByName(spaceDto.getTypeSpace());
 
@@ -52,6 +70,17 @@ public class SpaceServiceImpl implements ISpaceService {
         return spaceRepository.save(space);
 
     }
+
+    private String extractDescription(String typeSpace) {
+
+        if (typeSpace.contains("(") && typeSpace.contains(")")) {
+            return typeSpace.split("\\(")[1].replace(")", "");
+        } else {
+            return "";
+        }
+    }
+
+
 
     @Override
     public PagedModel<SpaceDto> getSpaces(Pageable pageable) {

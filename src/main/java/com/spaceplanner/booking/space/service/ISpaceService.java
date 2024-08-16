@@ -9,7 +9,7 @@ import org.springframework.data.web.PagedModel;
 
 public interface ISpaceService {
 
-    Space registerSpace(@Valid SpaceDto spaceDto) throws Exception;
+  /*  Space registerSpace(@Valid SpaceDto spaceDto) throws Exception;*/
 
     PagedModel<SpaceDto> getSpaces(Pageable pageable);
 
