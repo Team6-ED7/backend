@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface ITypeSpaceRepository extends JpaRepository<TypeSpace, Long> {
 
     Boolean existsTypeSpaceByName(String name);
-    TypeSpace findTypeSpaceByName(String name);
+    TypeSpace findTypeSpaceByNameIgnoreCase(String name);
 }

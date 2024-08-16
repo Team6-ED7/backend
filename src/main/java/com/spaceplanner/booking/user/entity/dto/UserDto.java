@@ -1,6 +1,6 @@
 package com.spaceplanner.booking.user.entity.dto;
 
-import com.spaceplanner.booking.user.entity.Rol;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -23,7 +23,7 @@ public class UserDto {
     private String email;
 
     @NotBlank(message = "Password is required")
-    @Size(min = 8, max = 100, message = "Password must be a minimum of 8 and a maximum of 100 characters.")
+    @Size(min = 6,  message = "Password must be a minimum of 6")
     private String password;
 
 

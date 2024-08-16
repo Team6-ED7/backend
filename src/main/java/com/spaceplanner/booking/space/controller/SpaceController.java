@@ -1,6 +1,7 @@
 package com.spaceplanner.booking.space.controller;
 
 import com.spaceplanner.booking.space.entity.Space;
+import com.spaceplanner.booking.space.entity.dto.MassiveSpaceDto;
 import com.spaceplanner.booking.space.entity.dto.SpaceDto;
 import com.spaceplanner.booking.space.service.ISpaceService;
 import jakarta.validation.Valid;
@@ -27,5 +28,11 @@ public class SpaceController {
     @GetMapping
     public ResponseEntity<PagedModel<SpaceDto>> findAll(@PageableDefault(page = 0, size = 5) Pageable pageable) {
         return new ResponseEntity<>(spaceService.getSpaces(pageable), HttpStatus.OK);
+    }
+
+    @PostMapping("/massive-register")
+    public ResponseEntity<Void> registerMassiveSpace(@Valid @RequestBody MassiveSpaceDto massiveSpaceDto) throws Exception{
+        spaceService.registerMassiveSpace(massiveSpaceDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

@@ -3,6 +3,7 @@ package com.spaceplanner.booking.space.entity;
 import com.spaceplanner.booking.typespace.entity.TypeSpace;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "spaces")
+@Builder
 public class Space {
         @Id
         @GeneratedValue(strategy= GenerationType.SEQUENCE)
