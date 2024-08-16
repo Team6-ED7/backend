@@ -31,8 +31,10 @@ public class SpaceDto implements Serializable {
 
     private Boolean available = true;
 
-    @NotBlank(message = "Type Space is required")
-    private String typeSpace;
+    private TypeSpaceEnum typeSpace;
 
-    private UUID codeUuid;
+  /*  @NotBlank(message = "Type Space is required")
+    private String typeSpace;
+*/
+  /*  private UUID codeUuid;*/
 }

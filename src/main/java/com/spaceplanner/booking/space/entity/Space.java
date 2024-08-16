@@ -1,5 +1,6 @@
 package com.spaceplanner.booking.space.entity;
 
+import com.spaceplanner.booking.space.entity.dto.TypeSpaceEnum;
 import com.spaceplanner.booking.typespace.entity.TypeSpace;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,18 +26,17 @@ public class Space {
         private Integer capacity;
         private Boolean available;
 
-        @Column(name = "code_uuid")
-        private UUID codeUuid;
+     /*   @Column(name = "code_uuid")
+        private UUID codeUuid;*/
 
-        @ManyToOne
-        @JoinColumn
-        private TypeSpace typeSpace;
+       @Enumerated(EnumType.STRING)
+        private TypeSpaceEnum typeSpace;
 
-        //Genera el código UUID antes de guardar en la base de datos.
+   /*     //Genera el código UUID antes de guardar en la base de datos.
         @PrePersist
         private void generateUuidCode() {
                 codeUuid = UUID.randomUUID();
         }
-
+*/
 
 }

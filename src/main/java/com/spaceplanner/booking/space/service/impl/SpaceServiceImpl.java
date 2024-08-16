@@ -28,10 +28,10 @@ public class SpaceServiceImpl implements ISpaceService {
     @Transactional()
     @Override
     public Space registerSpace(SpaceDto spaceDto) throws Exception {
-
+/*
         if(spaceRepository.existsSpaceByCodeUuid(spaceDto.getCodeUuid())) {
             throw new ModelAlreadyExistsException("Space already exists");
-        }
+        }*/
 
         Space space = new Space();
         space.setName(spaceDto.getName());
@@ -39,14 +39,15 @@ public class SpaceServiceImpl implements ISpaceService {
         space.setDescription(spaceDto.getDescription());
         space.setAvailable(spaceDto.getAvailable());
         space.setCapacity(spaceDto.getCapacity());
+        space.setTypeSpace(spaceDto.getTypeSpace());
 
-        TypeSpace typeSpace = typeSpaceRepository.findTypeSpaceByName(spaceDto.getTypeSpace());
+     /*   TypeSpace typeSpace = typeSpaceRepository.findTypeSpaceByName(spaceDto.getTypeSpace());
 
         if(typeSpace == null) {
             throw new ModelNotFoundException("Type Space not found");
         }
 
-        space.setTypeSpace(typeSpace);
+        space.setTypeSpace(typeSpace);*/
 
         return spaceRepository.save(space);
 
@@ -54,8 +55,9 @@ public class SpaceServiceImpl implements ISpaceService {
 
     @Override
     public PagedModel<SpaceDto> getSpaces(Pageable pageable) {
-        return new PagedModel<>(spaceRepository.findAllSpaceDto(pageable));
+        //   return new PagedModel<>(spaceRepository.findAllSpaceDto(pageable));
+      return null;
+    }
     }
 
 
-}
