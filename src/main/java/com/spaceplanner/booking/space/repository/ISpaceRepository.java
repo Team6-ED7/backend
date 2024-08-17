@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -18,7 +18,7 @@ public interface ISpaceRepository extends JpaRepository<Space, Long> {
 
     Boolean existsSpaceByCodeUuid(UUID uuid);
 
-    @Query("SELECT NEW com.spaceplanner.booking.space.entity.dto.SpaceDto(s.name, s.floor, s.description, s.capacity, s.available, ts.name, s.codeUuid) FROM Space s JOIN FETCH TypeSpace ts on s.typeSpace.id = ts.id")
+    @Query("SELECT NEW com.spaceplanner.booking.space.entity.dto.SpaceDto(s.id, s.name, s.floor, s.description, s.capacity, s.available, ts.name, s.codeUuid) FROM Space s JOIN FETCH TypeSpace ts on s.typeSpace.id = ts.id")
     Page<SpaceDto> findAllSpaceDto(Pageable pageable);
 
     Integer countByTypeSpace(TypeSpace typeSpace);
@@ -26,4 +26,5 @@ public interface ISpaceRepository extends JpaRepository<Space, Long> {
     @Query("SELECT s.available FROM Space s WHERE s.id = :id")
     Boolean availableSpace(@Param("id") Long id);
 
+    List<Space> findAllSpaceByFloor(Integer floor);
 }

@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/spaces")
 public class SpaceController {
@@ -38,7 +40,10 @@ public class SpaceController {
 
     @GetMapping("/available/{id}")
     public ResponseEntity<Boolean> isAvailableSpace(@PathVariable("id") Long spaceId) throws Exception{
-
         return new ResponseEntity<>(spaceService.isAvailableSpace(spaceId), HttpStatus.OK);
+    }
+    @GetMapping("/floor/{floor}")
+    public ResponseEntity<List<SpaceDto>> findAllSpacesByFloor(@PathVariable("floor") Integer floor) throws Exception {
+        return new ResponseEntity<>(spaceService.findAllSpaceDtoByFloor(floor), HttpStatus.OK);
     }
 }

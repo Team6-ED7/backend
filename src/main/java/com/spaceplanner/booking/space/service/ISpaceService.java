@@ -7,7 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface ISpaceService {
 
@@ -18,5 +18,7 @@ public interface ISpaceService {
     void registerMassiveSpace(MassiveSpaceDto massiveSpaceDto) throws Exception;
 
     Boolean isAvailableSpace(Long id) throws Exception;
+
+    List<SpaceDto> findAllSpaceDtoByFloor(Integer floor) throws Exception;
 
 }

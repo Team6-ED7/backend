@@ -37,12 +37,13 @@ public class SpaceServiceImpl implements ISpaceService {
             throw new ModelAlreadyExistsException("Space already exists");
         }
 
-        Space space = new Space();
-        space.setName(spaceDto.getName());
-        space.setFloor(spaceDto.getFloor());
-        space.setDescription(spaceDto.getDescription());
-        space.setAvailable(spaceDto.getAvailable());
-        space.setCapacity(spaceDto.getCapacity());
+        Space space = Space.builder()
+                .name(spaceDto.getName())
+                .floor(spaceDto.getFloor())
+                .description(spaceDto.getDescription())
+                .available(spaceDto.getAvailable())
+                .capacity(spaceDto.getCapacity())
+                .build();
 
         TypeSpace typeSpace = typeSpaceRepository.findTypeSpaceByNameIgnoreCase(spaceDto.getTypeSpace());
 
@@ -114,7 +115,7 @@ public class SpaceServiceImpl implements ISpaceService {
     }
 
     @Override
-    public Boolean isAvailableSpace(Long id) throws Exception{
+    public Boolean isAvailableSpace(Long id) throws Exception {
         Boolean isAvailable = spaceRepository.availableSpace(id);
 
         if (isAvailable == null) {
@@ -122,9 +123,36 @@ public class SpaceServiceImpl implements ISpaceService {
         }
 
         return isAvailable;
-
     }
 
+    @Override
+    public List<SpaceDto> findAllSpaceDtoByFloor(Integer floor) throws Exception {
+
+        List<Space> listSpace = spaceRepository.findAllSpaceByFloor(floor);
+
+        if (listSpace.isEmpty()) {
+            throw new ModelNotFoundException("Floor not found ");
+        }
+
+        List<SpaceDto> spaceDtoList = new ArrayList<>();
+
+        listSpace.forEach(space -> {
+            SpaceDto spaceDto = SpaceDto.builder()
+                    .id(space.getId())
+                    .name(space.getName())
+                    .floor(space.getFloor())
+                    .description(space.getDescription())
+                    .capacity(space.getCapacity())
+                    .available(space.getAvailable())
+                    .typeSpace(space.getTypeSpace().getName())
+                    .codeUuid(space.getCodeUuid())
+                    .build();
+
+            spaceDtoList.add(spaceDto);
+        });
+
+        return spaceDtoList;
+    }
 
 
 }
