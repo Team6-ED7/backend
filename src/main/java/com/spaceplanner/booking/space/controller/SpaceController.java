@@ -35,4 +35,10 @@ public class SpaceController {
         spaceService.registerMassiveSpace(massiveSpaceDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @GetMapping("/available/{id}")
+    public ResponseEntity<Boolean> isAvailableSpace(@PathVariable("id") Long spaceId) throws Exception{
+
+        return new ResponseEntity<>(spaceService.isAvailableSpace(spaceId), HttpStatus.OK);
+    }
 }

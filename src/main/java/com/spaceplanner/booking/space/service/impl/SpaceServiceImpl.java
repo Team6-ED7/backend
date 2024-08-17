@@ -113,4 +113,18 @@ public class SpaceServiceImpl implements ISpaceService {
         return abbreviatedName.toString().toUpperCase();
     }
 
+    @Override
+    public Boolean isAvailableSpace(Long id) throws Exception{
+        Boolean isAvailable = spaceRepository.availableSpace(id);
+
+        if (isAvailable == null) {
+            throw new ModelNotFoundException("Space not found");
+        }
+
+        return isAvailable;
+
+    }
+
+
+
 }
