@@ -3,6 +3,7 @@ package com.spaceplanner.booking.space.controller;
 import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.space.entity.dto.MassiveSpaceDto;
 import com.spaceplanner.booking.space.entity.dto.SpaceDto;
+import com.spaceplanner.booking.space.entity.dto.SpaceFilterCriteriaDto;
 import com.spaceplanner.booking.space.service.ISpaceService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,11 @@ public class SpaceController {
     @GetMapping("/floor/{floor}")
     public ResponseEntity<List<SpaceDto>> findAllSpacesByFloor(@PathVariable("floor") Integer floor) throws Exception {
         return new ResponseEntity<>(spaceService.findAllSpaceDtoByFloor(floor), HttpStatus.OK);
+    }
+
+//    public ResponseEntity<List<SpaceDto>> filterSpace(@RequestParam("floor") Integer floor, @RequestParam("available") Boolean available,@RequestParam("type") String typeSpace) throws Exception {
+    @PostMapping("/filter")
+    public ResponseEntity<List<SpaceDto>> filterSpace(@Valid @RequestBody SpaceFilterCriteriaDto spaceFilter) throws Exception {
+        return new ResponseEntity<>(spaceService.filterSpaceDto(spaceFilter), HttpStatus.OK);
     }
 }

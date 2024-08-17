@@ -3,6 +3,7 @@ package com.spaceplanner.booking.space.service;
 import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.space.entity.dto.MassiveSpaceDto;
 import com.spaceplanner.booking.space.entity.dto.SpaceDto;
+import com.spaceplanner.booking.space.entity.dto.SpaceFilterCriteriaDto;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
@@ -20,5 +21,7 @@ public interface ISpaceService {
     Boolean isAvailableSpace(Long id) throws Exception;
 
     List<SpaceDto> findAllSpaceDtoByFloor(Integer floor) throws Exception;
+
+    List<SpaceDto> filterSpaceDto(SpaceFilterCriteriaDto spaceFilterCriteriaDto) throws Exception;
 
 }

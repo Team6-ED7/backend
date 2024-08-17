@@ -5,6 +5,7 @@ import com.spaceplanner.booking.Global.exceptionhandler.ModelNotFoundException;
 import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.space.entity.dto.MassiveSpaceDto;
 import com.spaceplanner.booking.space.entity.dto.SpaceDto;
+import com.spaceplanner.booking.space.entity.dto.SpaceFilterCriteriaDto;
 import com.spaceplanner.booking.space.repository.ISpaceRepository;
 import com.spaceplanner.booking.space.service.ISpaceService;
 import com.spaceplanner.booking.typespace.entity.TypeSpace;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -131,27 +133,32 @@ public class SpaceServiceImpl implements ISpaceService {
         List<Space> listSpace = spaceRepository.findAllSpaceByFloor(floor);
 
         if (listSpace.isEmpty()) {
-            throw new ModelNotFoundException("Floor not found ");
+            throw new ModelNotFoundException("The floor not found ");
         }
 
-        List<SpaceDto> spaceDtoList = new ArrayList<>();
+        return listSpace.stream().map(this::mapToDto).collect(Collectors.toList());
+    }
 
-        listSpace.forEach(space -> {
-            SpaceDto spaceDto = SpaceDto.builder()
-                    .id(space.getId())
-                    .name(space.getName())
-                    .floor(space.getFloor())
-                    .description(space.getDescription())
-                    .capacity(space.getCapacity())
-                    .available(space.getAvailable())
-                    .typeSpace(space.getTypeSpace().getName())
-                    .codeUuid(space.getCodeUuid())
-                    .build();
+    @Override
+    public List<SpaceDto> filterSpaceDto(SpaceFilterCriteriaDto spaceFilter) throws Exception {
 
-            spaceDtoList.add(spaceDto);
-        });
+        List<Space> listSpace = spaceRepository.filterSpaceDto(spaceFilter.getFloor(), spaceFilter.getAvailable(), spaceFilter.getTypeSpace());
 
-        return spaceDtoList;
+        return listSpace.stream().map(this::mapToDto).collect(Collectors.toList());
+
+    }
+
+    private SpaceDto mapToDto(Space space) {
+        return SpaceDto.builder()
+                .id(space.getId())
+                .name(space.getName())
+                .floor(space.getFloor())
+                .description(space.getDescription())
+                .capacity(space.getCapacity())
+                .available(space.getAvailable())
+                .typeSpace(space.getTypeSpace().getName())
+                .codeUuid(space.getCodeUuid())
+                .build();
     }
 
 

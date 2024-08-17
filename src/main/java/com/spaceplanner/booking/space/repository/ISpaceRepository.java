@@ -16,6 +16,8 @@ import java.util.UUID;
 @Repository
 public interface ISpaceRepository extends JpaRepository<Space, Long> {
 
+    String FILTER_SPACE = "SELECT s FROM Space s LEFT JOIN TypeSpace ts ON s.typeSpace.id = ts.id WHERE s.floor=:floor AND s.available=:available AND ts.name LIKE %:typeSpace%";
+
     Boolean existsSpaceByCodeUuid(UUID uuid);
 
     @Query("SELECT NEW com.spaceplanner.booking.space.entity.dto.SpaceDto(s.id, s.name, s.floor, s.description, s.capacity, s.available, ts.name, s.codeUuid) FROM Space s JOIN FETCH TypeSpace ts on s.typeSpace.id = ts.id")
@@ -27,4 +29,7 @@ public interface ISpaceRepository extends JpaRepository<Space, Long> {
     Boolean availableSpace(@Param("id") Long id);
 
     List<Space> findAllSpaceByFloor(Integer floor);
+
+    @Query(FILTER_SPACE)
+    List<Space> filterSpaceDto(@Param("floor") Integer floor, @Param("available") Boolean available, @Param("typeSpace") String typeSpace);
 }
