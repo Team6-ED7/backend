@@ -4,6 +4,7 @@ import com.spaceplanner.booking.Global.exceptionhandler.ModelAlreadyExistsExcept
 import com.spaceplanner.booking.Global.exceptionhandler.ModelNotFoundException;
 import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.space.entity.dto.MassiveSpaceDto;
+import com.spaceplanner.booking.space.entity.dto.SmallSpaceDto;
 import com.spaceplanner.booking.space.entity.dto.SpaceDto;
 import com.spaceplanner.booking.space.entity.dto.SpaceFilterCriteriaDto;
 import com.spaceplanner.booking.space.repository.ISpaceRepository;
@@ -35,7 +36,7 @@ public class SpaceServiceImpl implements ISpaceService {
     @Override
     public Space registerSpace(SpaceDto spaceDto) throws Exception {
 
-        if (spaceRepository.existsSpaceByCodeUuid(spaceDto.getCodeUuid())) {
+        if (spaceRepository.existsSpaceByName(spaceDto.getName())) {
             throw new ModelAlreadyExistsException("Space already exists");
         }
 
@@ -148,6 +149,11 @@ public class SpaceServiceImpl implements ISpaceService {
 
     }
 
+    @Override
+    public List<SmallSpaceDto> findAllSmallSpaceDto() {
+        return spaceRepository.findAllSmallSpace();
+    }
+
     private SpaceDto mapToDto(Space space) {
         return SpaceDto.builder()
                 .id(space.getId())
@@ -157,7 +163,6 @@ public class SpaceServiceImpl implements ISpaceService {
                 .capacity(space.getCapacity())
                 .available(space.getAvailable())
                 .typeSpace(space.getTypeSpace().getName())
-                .codeUuid(space.getCodeUuid())
                 .build();
     }
 

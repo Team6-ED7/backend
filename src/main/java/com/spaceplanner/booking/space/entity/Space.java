@@ -27,18 +27,18 @@ public class Space {
         private Integer capacity;
         private Boolean available;
 
-        @Column(name = "code_uuid")
-        private UUID codeUuid;
+//        @Column(name = "code_uuid")
+//        private UUID codeUuid;
 
         @ManyToOne
         @JoinColumn
         private TypeSpace typeSpace;
 
         //Genera el código UUID antes de guardar en la base de datos.
-        @PrePersist
-        private void generateUuidCode() {
-                codeUuid = UUID.randomUUID();
-        }
+//        @PrePersist
+//        private void generateUuidCode() {
+//                codeUuid = UUID.randomUUID();
+//        }
 
 
 }

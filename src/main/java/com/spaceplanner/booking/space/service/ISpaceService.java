@@ -2,6 +2,7 @@ package com.spaceplanner.booking.space.service;
 
 import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.space.entity.dto.MassiveSpaceDto;
+import com.spaceplanner.booking.space.entity.dto.SmallSpaceDto;
 import com.spaceplanner.booking.space.entity.dto.SpaceDto;
 import com.spaceplanner.booking.space.entity.dto.SpaceFilterCriteriaDto;
 import jakarta.validation.Valid;
@@ -23,5 +24,7 @@ public interface ISpaceService {
     List<SpaceDto> findAllSpaceDtoByFloor(Integer floor) throws Exception;
 
     List<SpaceDto> filterSpaceDto(SpaceFilterCriteriaDto spaceFilterCriteriaDto) throws Exception;
+
+    List<SmallSpaceDto> findAllSmallSpaceDto();
 
 }

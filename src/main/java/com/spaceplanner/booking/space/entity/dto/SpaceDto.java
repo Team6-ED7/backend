@@ -1,17 +1,14 @@
 package com.spaceplanner.booking.space.entity.dto;
 
-import com.spaceplanner.booking.typespace.entity.TypeSpace;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -37,6 +34,4 @@ public class SpaceDto implements Serializable {
 
     @NotBlank(message = "Type Space is required")
     private String typeSpace;
-
-    private UUID codeUuid;
 }

@@ -2,6 +2,7 @@ package com.spaceplanner.booking.space.controller;
 
 import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.space.entity.dto.MassiveSpaceDto;
+import com.spaceplanner.booking.space.entity.dto.SmallSpaceDto;
 import com.spaceplanner.booking.space.entity.dto.SpaceDto;
 import com.spaceplanner.booking.space.entity.dto.SpaceFilterCriteriaDto;
 import com.spaceplanner.booking.space.service.ISpaceService;
@@ -53,4 +54,11 @@ public class SpaceController {
     public ResponseEntity<List<SpaceDto>> filterSpace(@Valid @RequestBody SpaceFilterCriteriaDto spaceFilter) throws Exception {
         return new ResponseEntity<>(spaceService.filterSpaceDto(spaceFilter), HttpStatus.OK);
     }
+
+    @GetMapping("/small-spaces")
+    public ResponseEntity<List<SmallSpaceDto>> findAllSmallSpace() throws Exception{
+        return new ResponseEntity<>(spaceService.findAllSmallSpaceDto(), HttpStatus.OK);
+    }
+
+
 }
