@@ -1,15 +1,17 @@
 package com.spaceplanner.booking.user.repository;
 
-import com.spaceplanner.booking.user.entity.UserEntity;
+import com.spaceplanner.booking.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface IUserRepository extends JpaRepository<UserEntity, Long> {
+public interface IUserRepository extends JpaRepository<User, Long> {
 
 
-    Optional<UserEntity> findByEmail(String email);
+    Optional<User> findByEmail(String email);
+
+
 
 }

@@ -5,14 +5,16 @@ import com.spaceplanner.booking.typespace.entity.TypeSpace;
 import com.spaceplanner.booking.typespace.entity.dto.TypeSpaceDto;
 import com.spaceplanner.booking.typespace.repository.ITypeSpaceRepository;
 import com.spaceplanner.booking.typespace.service.ITypeSpaceService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class TypeSpaceServiceImpl implements ITypeSpaceService {
 
-    @Autowired
+
     ITypeSpaceRepository typeSpaceRepository;
 
     @Override
