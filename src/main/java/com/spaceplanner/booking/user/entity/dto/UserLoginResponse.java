@@ -1,17 +1,16 @@
 package com.spaceplanner.booking.user.entity.dto;
 
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-@Data
-@RequiredArgsConstructor
 
+@Getter@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class UserLoginResponse {
     private String token;
     private String name;
 
-    public UserLoginResponse (String jwtToken, String name) {
-    }
+
 }

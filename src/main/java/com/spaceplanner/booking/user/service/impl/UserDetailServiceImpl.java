@@ -64,22 +64,20 @@ public class UserDetailServiceImpl implements UserDetailsService, IUserService {
                userRepository.save(user);
     }
 //TODO implement the loginUser method NOT SEND TO FRONTEND. fIX THE BUG
-    public UserLoginResponse loginUser(UserLoginDto userLoginDto) {
+public UserLoginResponse loginUser (UserLoginDto userLoginDto) {
+    User user = authenticateUser (userLoginDto);
+    String jwtToken = jwtUtils.createToken (loadUserByUsername (userLoginDto.getEmail ()));
+    return new UserLoginResponse (jwtToken, user.getName ());
+}
 
-        User user = userRepository.findByEmail(userLoginDto.getEmail())
-                .orElseThrow(() -> new BadCredentialsException("User not found"));
-
-
-        if (!passwordEncoder.matches(userLoginDto.getPassword(), user.getPassword())) {
-            throw new BadCredentialsException("Invalid password");
+    private User authenticateUser (UserLoginDto userLoginDto) {
+        User user = userRepository.findByEmail (userLoginDto.getEmail ())
+                .orElseThrow (() -> new BadCredentialsException ("User not found"));
+        boolean passwordMatches = passwordEncoder.matches (userLoginDto.getPassword (), user.getPassword ());
+        if (! passwordMatches) {
+            throw new BadCredentialsException ("Invalid password");
         }
-
-
-        String jwtToken = jwtUtils.createToken(loadUserByUsername(userLoginDto.getEmail()));
-
-
-        return new UserLoginResponse(jwtToken, user.getName());
+        return user;
     }
-
 }
 
