@@ -63,7 +63,7 @@ public class UserDetailServiceImpl implements UserDetailsService, IUserService {
                 .build();
                userRepository.save(user);
     }
-
+//TODO implement the loginUser method NOT SEND TO FRONTEND. fIX THE BUG
     public UserLoginResponse loginUser(UserLoginDto userLoginDto) {
 
         User user = userRepository.findByEmail(userLoginDto.getEmail())
