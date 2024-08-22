@@ -11,10 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+
 public class TypeSpaceServiceImpl implements ITypeSpaceService {
 
 
+    @Autowired
     ITypeSpaceRepository typeSpaceRepository;
 
     @Override

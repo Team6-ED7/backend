@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/typespaces")
-@RequiredArgsConstructor
+
 public class TypeSpaceController {
 
-
+    @Autowired
     ITypeSpaceService typeSpaceService;
 
     @PostMapping("/register")
