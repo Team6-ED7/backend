@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authorization.method.PrePostTemplateDefaults;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -51,6 +52,7 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/api/spaces/small-spaces").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/api/spaces").permitAll();
 
+
                     auth.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();  // Allow public access to Swagger UI
 
                     auth.anyRequest().authenticated();
@@ -80,5 +82,8 @@ public class SecurityConfig {
     }
 
 
-
+    @Bean
+     PrePostTemplateDefaults prePostTemplateDefaults() {
+        return new PrePostTemplateDefaults();
+    }
 }
