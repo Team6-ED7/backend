@@ -2,7 +2,6 @@ package com.spaceplanner.booking.user.service.impl;
 
 import com.spaceplanner.booking.Global.exception.BusinessException;
 import com.spaceplanner.booking.Global.util.JwtUtils;
-import com.spaceplanner.booking.user.entity.RoleEnum;
 import com.spaceplanner.booking.user.entity.User;
 
 
@@ -13,7 +12,6 @@ import com.spaceplanner.booking.user.repository.IUserRepository;
 import com.spaceplanner.booking.user.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -46,7 +44,7 @@ public class UserDetailServiceImpl implements UserDetailsService, IUserService {
         user.getRoles().stream()
                 .flatMap(role -> role.getPermissionList().stream())
                 .forEach(permission -> authorityList.add(new SimpleGrantedAuthority(permission.getName())));
-        return new org.springframework.security.core.userdetails.User (user.getEmail(), passwordEncoder.encode (user.getPassword()) , user.isEnabled(),
+        return new org.springframework.security.core.userdetails.User (user.getEmail(), passwordEncoder.encode (user.getHashedPassword ()) , user.isEnabled(),
                 user.isAccountNoExpired(), user.isCredentialNoExpired(), user.isAccountNoLocked(), authorityList);
     }
 
@@ -56,12 +54,7 @@ public class UserDetailServiceImpl implements UserDetailsService, IUserService {
                 .name(userDto.getName())
                 .lastName(userDto.getLastName())
                 .email(userDto.getEmail())
-                .password(userDto.getPassword())
-                .isEnabled(true)
-                .accountNoExpired(true)
-                .accountNoLocked(true)
-                .credentialNoExpired(true)
-                .roleEnum(RoleEnum.USER)
+                .hashedPassword(userDto.getHashedPassword ())
                 .build();
                userRepository.save(user);
     }
@@ -75,7 +68,7 @@ public UserLoginResponse loginUser (UserLoginDto userLoginDto) {
     private User authenticateUser (UserLoginDto userLoginDto) {
         User user = userRepository.findByEmail (userLoginDto.getEmail ())
                 .orElseThrow (() -> new BusinessException ("444", HttpStatus.CONFLICT,"User not found"));
-        boolean passwordMatches = passwordEncoder.matches (userLoginDto.getPassword (), user.getPassword ());
+        boolean passwordMatches = passwordEncoder.matches (userLoginDto.getHashedPassword (), user.getHashedPassword ());
         if (! passwordMatches) {
             throw new BusinessException ("445", HttpStatus.CONFLICT,"Password does not match");
         }

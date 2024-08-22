@@ -2,12 +2,17 @@ package com.spaceplanner.booking.reservation.entity.dto;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 public class ReservationDto {
 
-    private Long userId;
-    private Long spaceId;
-    private String startTime;
-    private String endTime;
-    private String status;
+    private String userEmail;
+    private String spaceName;
+    private LocalDate startDate;
+    private Boolean status;
+
 }
+
+
+

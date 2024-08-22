@@ -27,7 +27,7 @@ public class UserController {
     /* @IsUser ({"PERMIT ALL"})*/ //TODO: IMPLEMENT NEXT RELEASE AFTER MVP IS DONE
     public ResponseEntity<User> registerUser(@Valid @RequestBody UserDto userDto) {
         // Encrypt the password before saving the user
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        userDto.setHashedPassword (passwordEncoder.encode(userDto.getHashedPassword ()) );
         userService.registerUser(userDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

@@ -1,11 +1,14 @@
 package com.spaceplanner.booking.user.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 
+@Setter
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Data
 @Table(name = "permissions")
 public class PermissionEntity {
     @Id
@@ -13,6 +16,7 @@ public class PermissionEntity {
     private Long id;
 
     @Column(unique = true, nullable = false, updatable = false)
-    private String name;
+    @Builder.Default
+    private String name="write";
 
 }

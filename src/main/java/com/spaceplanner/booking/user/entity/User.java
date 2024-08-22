@@ -24,19 +24,23 @@ public class User {
     @Column(unique=true)
     private String email;
 
-    private String password;
+    private String hashedPassword;
 
     @Column(name = "is_enabled")
-    private boolean isEnabled;
+    @Builder.Default
+    private boolean isEnabled = true;
 
     @Column(name = "account_no_expired")
-    private boolean accountNoExpired;
+    @Builder.Default
+    private boolean accountNoExpired = true;
 
     @Column(name = "account_no_locked")
-    private boolean accountNoLocked;
+    @Builder.Default
+    private boolean accountNoLocked = false;
 
     @Column(name = "credential_No_Expired" )
-    private boolean credentialNoExpired;
+    @Builder.Default
+    private boolean credentialNoExpired= false;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default

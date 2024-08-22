@@ -20,8 +20,13 @@ public interface ISpaceRepository extends JpaRepository<Space, Long> {
 
     Boolean existsSpaceByName(String name);
 
+
+
+
     @Query("SELECT NEW com.spaceplanner.booking.space.entity.dto.SpaceDto(s.id, s.name, s.floor, s.description, s.capacity, s.available, ts.name) FROM Space s JOIN FETCH TypeSpace ts on s.typeSpace.id = ts.id")
     Page<SpaceDto> findAllSpaceDto(Pageable pageable);
+
+
 
     Integer countByTypeSpace(TypeSpace typeSpace);
 
@@ -35,4 +40,8 @@ public interface ISpaceRepository extends JpaRepository<Space, Long> {
 
     @Query("SELECT NEW com.spaceplanner.booking.space.entity.dto.SmallSpaceDto( s.name, s.floor, s.available) FROM Space s")
     List<SmallSpaceDto> findAllSmallSpace();
+
+    @Query("SELECT s FROM Space s WHERE s.name = :spaceName")
+    Space findSpaceByNameCreation (String spaceName);
+
 }

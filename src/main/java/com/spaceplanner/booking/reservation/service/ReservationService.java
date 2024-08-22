@@ -6,14 +6,19 @@ import com.spaceplanner.booking.reservation.entity.dto.ReservationDto;
 import com.spaceplanner.booking.reservation.repository.IResorvationRepository;
 import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.space.repository.ISpaceRepository;
+import com.spaceplanner.booking.user.entity.User;
 import com.spaceplanner.booking.user.repository.IUserRepository;
 import jakarta.transaction.Transactional;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import static java.time.LocalDate.now;
 
 
 @Service
@@ -35,34 +40,35 @@ public class ReservationService {
     public ReservationEntity createReservation(ReservationDto reservationDto) {
 
         validateReservationData(reservationDto);
-        Space space = spaceRepository.findById(reservationDto.getSpaceId())
-                .orElseThrow(() -> new RuntimeException("Space not found"));
-        if (!isSpaceAvailable(space, LocalDateTime.parse(reservationDto.getStartTime()), LocalDateTime.parse(reservationDto.getEndTime()))) {
+        Space space = spaceRepository.findSpaceByNameCreation (reservationDto.getSpaceName());
+
+        if (!isSpaceAvailable(space,reservationDto.getStartDate())  ) {
             throw new RuntimeException("Space is not available for the requested time.");
         }
-
+       /* User user = userRepository.findByEmail (reservationDto.getUserEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));*/
         ReservationEntity reservationEntity = new ReservationEntity();
-        reservationEntity.setUser(userRepository.findById(reservationDto.getUserId())
+        reservationEntity.setUser(userRepository.findByEmail (reservationDto.getUserEmail())
                 .orElseThrow(() -> new RuntimeException("User not found")));
         reservationEntity.setSpace(space);
-        reservationEntity.setStartTime(LocalDateTime.parse(reservationDto.getStartTime()));
-        reservationEntity.setEndTime(LocalDateTime.parse(reservationDto.getEndTime()));
-        reservationEntity.setStatus(ReservationStatus.PENDING);
-
+        reservationEntity.setStartDate (reservationDto.getStartDate ());
+        reservationEntity.setStatus(ReservationStatus.APPROVED);
 
         return reservationRepository.save(reservationEntity);
     }
 
-    public boolean isSpaceAvailable(Space space, LocalDateTime startTime, LocalDateTime endTime) {
-        // Check if the space is available for the requested time
-        return reservationRepository.findAllBySpaceAndStartTimeBetweenOrEndTimeBetween(space, startTime, endTime, startTime, endTime).isEmpty();
+    @Transactional
+    public boolean isSpaceAvailable(Space space, LocalDate startTime) {
+
+        return reservationRepository.findAllBySpaceAndStartDate(space, startTime).isEmpty();
     }
 
     private void validateReservationData(ReservationDto reservationDto) {
 
-        LocalDateTime startTime = LocalDateTime.parse(reservationDto.getStartTime());
-        LocalDateTime endTime = LocalDateTime.parse(reservationDto.getEndTime());
-        if (startTime.isAfter(endTime)) {
+        LocalDate startTime = reservationDto.getStartDate ();
+
+
+        if (startTime.isAfter(now())) {
             throw new IllegalArgumentException("Start time must be before end time.");
         }
 
@@ -79,5 +85,21 @@ public class ReservationService {
     }
     public List<ReservationEntity> findBySpaceId(Long spaceId) {
         return reservationRepository.findAllBySpace_Id(spaceId);
+    }
+
+    @Scheduled (cron = "0 0 0 * * *")
+    @Transactional
+    public void deleteReservation() {
+      spaceRepository.findAll ().forEach (space -> {
+            reservationRepository.findAllBySpaceAndStartDate (space, LocalDate.now ()).forEach (reservationEntity -> {
+                if (reservationEntity.getStartDate ().isBefore (LocalDate.now ())) {
+                    reservationEntity.setStatus (ReservationStatus.CANCELLED);
+                    reservationRepository.save (reservationEntity);
+
+                    space.setAvailable (true);
+                }
+            });
+        });
+
     }
 }

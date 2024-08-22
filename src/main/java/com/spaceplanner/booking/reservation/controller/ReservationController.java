@@ -1,6 +1,6 @@
 package com.spaceplanner.booking.reservation.controller;
 
-import com.spaceplanner.booking.config.annotation.IsUser;
+
 import com.spaceplanner.booking.reservation.entity.ReservationEntity;
 import com.spaceplanner.booking.reservation.entity.dto.ReservationDto;
 import com.spaceplanner.booking.reservation.service.ReservationService;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/reservations")
+@RequestMapping("/api/reservations")
 
 public class ReservationController {
 
@@ -27,14 +27,12 @@ public class ReservationController {
 
     @PostMapping
    /* @IsUser ({"USER"})*/ //TODO: IMPLEMENT NEXT RELEASE AFTER MVP IS DONE
-    public ResponseEntity<ReservationEntity> createReservation(@Valid @RequestBody ReservationDto reservationDto) {
-        try {
-            ReservationEntity reservation = reservationService.createReservation(reservationDto);
-            return new ResponseEntity<>(reservation, HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<ReservationEntity> createReservation(@RequestBody ReservationDto reservationDto) {
+
+        ReservationEntity newReservation = reservationService.createReservation(reservationDto);
+        return new ResponseEntity<>(newReservation, HttpStatus.OK);
     }
+
 
     @GetMapping("/{id}")
     /* @IsUser ({"USER"})*/ //TODO: IMPLEMENT NEXT RELEASE AFTER MVP IS DONE

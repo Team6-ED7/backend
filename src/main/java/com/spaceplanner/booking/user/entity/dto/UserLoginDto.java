@@ -1,10 +1,17 @@
 package com.spaceplanner.booking.user.entity.dto;
 
-import lombok.Data;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
-@Data
+@Setter
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserLoginDto {
+    @NotNull(message = "Email is required")
     private String email;
-    private String password;
+    @NotNull(message = "Password is required")
+    private String hashedPassword;
 
 }

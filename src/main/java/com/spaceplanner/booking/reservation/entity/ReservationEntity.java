@@ -5,7 +5,7 @@ import com.spaceplanner.booking.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "reservation")
@@ -24,8 +24,8 @@ public class ReservationEntity {
     @JoinColumn(name = "space_id")
     private Space space;
 
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private LocalDate startDate;
+
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;

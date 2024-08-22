@@ -24,7 +24,8 @@ public class UserDto {
 
     @NotBlank(message = "Password is required")
     @Size(min = 6,  message = "Password must be a minimum of 6")
-    private String password;
+    private String hashedPassword;
+
 
 
 }
