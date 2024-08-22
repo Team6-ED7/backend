@@ -45,15 +45,14 @@ public class ReservationService {
         if (!isSpaceAvailable(space,reservationDto.getStartDate())  ) {
             throw new RuntimeException("Space is not available for the requested time.");
         }
-       /* User user = userRepository.findByEmail (reservationDto.getUserEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));*/
+
         ReservationEntity reservationEntity = new ReservationEntity();
         reservationEntity.setUser(userRepository.findByEmail (reservationDto.getUserEmail())
                 .orElseThrow(() -> new RuntimeException("User not found")));
         reservationEntity.setSpace(space);
         reservationEntity.setStartDate (reservationDto.getStartDate ());
         reservationEntity.setStatus(ReservationStatus.APPROVED);
-
+        space.setAvailable (false);
         return reservationRepository.save(reservationEntity);
     }
 
@@ -74,15 +73,19 @@ public class ReservationService {
 
 
     }
-
+@Transactional
     public Optional<ReservationEntity> findById(Long id) {
 
         return reservationRepository.findById(id);
     }
-    public List<ReservationEntity> findByUserId(Long userId) {
+    @Transactional
+    public List<ReservationEntity> findByUserEmail(String userEmail) {
 
-        return reservationRepository.findAllByUser_Id(userId);
+
+        List<ReservationEntity> reservations = reservationRepository.findAllBy_Email (userEmail);
+        return reservations;
     }
+
     public List<ReservationEntity> findBySpaceId(Long spaceId) {
         return reservationRepository.findAllBySpace_Id(spaceId);
     }

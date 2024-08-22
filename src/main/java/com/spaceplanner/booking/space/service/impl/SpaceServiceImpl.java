@@ -136,6 +136,7 @@ public class SpaceServiceImpl implements ISpaceService {
 
     @Override
     public List<SmallSpaceDto> findAllSmallSpaceDto() {
+
         return spaceRepository.findAllSmallSpace();
     }
 

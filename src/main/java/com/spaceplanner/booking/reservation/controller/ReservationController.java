@@ -4,6 +4,9 @@ package com.spaceplanner.booking.reservation.controller;
 import com.spaceplanner.booking.reservation.entity.ReservationEntity;
 import com.spaceplanner.booking.reservation.entity.dto.ReservationDto;
 import com.spaceplanner.booking.reservation.service.ReservationService;
+
+import com.spaceplanner.booking.user.entity.User;
+import com.spaceplanner.booking.user.repository.IUserRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +22,11 @@ public class ReservationController {
 
 
     private final ReservationService reservationService;
+    private final IUserRepository userRepository;
 
-    public ReservationController (ReservationService reservationService) {
+    public ReservationController (ReservationService reservationService, IUserRepository userRepository) {
         this.reservationService = reservationService;
+        this.userRepository = userRepository;
     }
 
 
@@ -42,17 +47,21 @@ public class ReservationController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/user/")
     /* @IsUser ({"USER"})*/ //TODO: IMPLEMENT NEXT RELEASE AFTER MVP IS DONE
-    public ResponseEntity<List<ReservationEntity>> getReservationsByUser(@PathVariable Long userId) {
-        List<ReservationEntity> reservations = reservationService.findByUserId(userId);
+    public ResponseEntity<List<ReservationEntity>> getReservationsByUser(@Valid @RequestBody String userEmail) {
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        List<ReservationEntity> reservations = reservationService.findByUserEmail(userEmail);
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
     @GetMapping("/space/{spaceId}")
     /* @IsUser ({"USER"})*/ //TODO: IMPLEMENT NEXT RELEASE AFTER MVP IS DONE
     public ResponseEntity<List<ReservationEntity>> getReservationsBySpace(@PathVariable Long spaceId) {
+
         List<ReservationEntity> reservations = reservationService.findBySpaceId(spaceId);
+
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 }

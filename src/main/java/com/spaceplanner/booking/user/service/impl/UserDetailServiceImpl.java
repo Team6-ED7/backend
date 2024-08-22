@@ -62,7 +62,7 @@ public class UserDetailServiceImpl implements UserDetailsService, IUserService {
 public UserLoginResponse loginUser (UserLoginDto userLoginDto) {
     User user = authenticateUser (userLoginDto);
     String jwtToken = jwtUtils.createToken (loadUserByUsername (userLoginDto.getEmail ()));
-    return new UserLoginResponse (jwtToken, user.getName ());
+    return new UserLoginResponse (jwtToken, user.getEmail ());
 }
 
     private User authenticateUser (UserLoginDto userLoginDto) {
