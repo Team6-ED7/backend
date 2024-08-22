@@ -16,8 +16,8 @@ public interface IResorvationRepository extends JpaRepository<ReservationEntity,
 
 
 
-    @Query("SELECT r FROM ReservationEntity r WHERE r.user.email = :userId")
-    List<ReservationEntity> findAllBy_Email(String userId);
+    @Query("SELECT r FROM ReservationEntity r WHERE r.user.id = :userId")
+    List<ReservationEntity> findAllBy_Email(Long userId);
 
     List<ReservationEntity> findAllBySpace_Id(Long spaceId);
 

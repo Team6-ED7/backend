@@ -47,13 +47,10 @@ public class ReservationController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/user/")
-    /* @IsUser ({"USER"})*/ //TODO: IMPLEMENT NEXT RELEASE AFTER MVP IS DONE
-    public ResponseEntity<List<ReservationEntity>> getReservationsByUser(@Valid @RequestBody String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    @GetMapping("/user/{userEmail}")
+    public ResponseEntity<List<ReservationEntity>> getReservationsByUserEmail(@PathVariable String userEmail) {
         List<ReservationEntity> reservations = reservationService.findByUserEmail(userEmail);
-        return new ResponseEntity<>(reservations, HttpStatus.OK);
+        return ResponseEntity.ok(reservations);
     }
 
     @GetMapping("/space/{spaceId}")

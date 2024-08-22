@@ -52,6 +52,9 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.POST, "/api/spaces/filter").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/api/spaces/small-spaces").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/api/spaces").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/api/reservations/**").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/api/reservations/space").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/api/reservations/user").permitAll();
 
 
 

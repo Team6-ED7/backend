@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.time.LocalDate.now;
 
@@ -80,10 +81,11 @@ public class ReservationService {
     }
     @Transactional
     public List<ReservationEntity> findByUserEmail(String userEmail) {
+        return reservationRepository.findAll()
+                .parallelStream()
+                .filter(reservationEntity -> reservationEntity.getUser().getEmail().equals(userEmail))
+                .collect(Collectors.toList());
 
-
-        List<ReservationEntity> reservations = reservationRepository.findAllBy_Email (userEmail);
-        return reservations;
     }
 
     public List<ReservationEntity> findBySpaceId(Long spaceId) {
