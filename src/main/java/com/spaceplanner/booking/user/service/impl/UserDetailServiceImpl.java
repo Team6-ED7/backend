@@ -1,5 +1,6 @@
 package com.spaceplanner.booking.user.service.impl;
 
+import com.spaceplanner.booking.Global.exception.BusinessException;
 import com.spaceplanner.booking.Global.util.JwtUtils;
 import com.spaceplanner.booking.user.entity.RoleEnum;
 import com.spaceplanner.booking.user.entity.User;
@@ -11,6 +12,7 @@ import com.spaceplanner.booking.user.entity.dto.UserLoginResponse;
 import com.spaceplanner.booking.user.repository.IUserRepository;
 import com.spaceplanner.booking.user.service.IUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -63,7 +65,7 @@ public class UserDetailServiceImpl implements UserDetailsService, IUserService {
                 .build();
                userRepository.save(user);
     }
-//TODO implement the loginUser method NOT SEND TO FRONTEND. fIX THE BUG
+
 public UserLoginResponse loginUser (UserLoginDto userLoginDto) {
     User user = authenticateUser (userLoginDto);
     String jwtToken = jwtUtils.createToken (loadUserByUsername (userLoginDto.getEmail ()));
@@ -72,10 +74,10 @@ public UserLoginResponse loginUser (UserLoginDto userLoginDto) {
 
     private User authenticateUser (UserLoginDto userLoginDto) {
         User user = userRepository.findByEmail (userLoginDto.getEmail ())
-                .orElseThrow (() -> new BadCredentialsException ("User not found"));
+                .orElseThrow (() -> new BusinessException ("444", HttpStatus.CONFLICT,"User not found"));
         boolean passwordMatches = passwordEncoder.matches (userLoginDto.getPassword (), user.getPassword ());
         if (! passwordMatches) {
-            throw new BadCredentialsException ("Invalid password");
+            throw new BusinessException ("445", HttpStatus.CONFLICT,"Password does not match");
         }
         return user;
     }
