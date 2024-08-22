@@ -1,7 +1,7 @@
 package com.spaceplanner.booking.reservation.entity;
 
 import com.spaceplanner.booking.space.entity.Space;
-import com.spaceplanner.booking.user.entity.UserEntity;
+import com.spaceplanner.booking.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,7 +18,7 @@ public class ReservationEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "space_id")

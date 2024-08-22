@@ -4,7 +4,9 @@ import com.spaceplanner.booking.Global.exceptionhandler.ModelAlreadyExistsExcept
 import com.spaceplanner.booking.Global.exceptionhandler.ModelNotFoundException;
 import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.space.entity.dto.MassiveSpaceDto;
+import com.spaceplanner.booking.space.entity.dto.SmallSpaceDto;
 import com.spaceplanner.booking.space.entity.dto.SpaceDto;
+import com.spaceplanner.booking.space.entity.dto.SpaceFilterCriteriaDto;
 import com.spaceplanner.booking.space.repository.ISpaceRepository;
 import com.spaceplanner.booking.space.service.ISpaceService;
 import com.spaceplanner.booking.typespace.entity.TypeSpace;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -33,16 +36,17 @@ public class SpaceServiceImpl implements ISpaceService {
     @Override
     public Space registerSpace(SpaceDto spaceDto) throws Exception {
 
-        if (spaceRepository.existsSpaceByCodeUuid(spaceDto.getCodeUuid())) {
+        if (spaceRepository.existsSpaceByName(spaceDto.getName())) {
             throw new ModelAlreadyExistsException("Space already exists");
         }
 
-        Space space = new Space();
-        space.setName(spaceDto.getName());
-        space.setFloor(spaceDto.getFloor());
-        space.setDescription(spaceDto.getDescription());
-        space.setAvailable(spaceDto.getAvailable());
-        space.setCapacity(spaceDto.getCapacity());
+        Space space = Space.builder()
+                .name(spaceDto.getName())
+                .floor(spaceDto.getFloor())
+                .description(spaceDto.getDescription())
+                .available(spaceDto.getAvailable())
+                .capacity(spaceDto.getCapacity())
+                .build();
 
         TypeSpace typeSpace = typeSpaceRepository.findTypeSpaceByNameIgnoreCase(spaceDto.getTypeSpace());
 
@@ -112,5 +116,55 @@ public class SpaceServiceImpl implements ISpaceService {
 
         return abbreviatedName.toString().toUpperCase();
     }
+
+    @Override
+    public Boolean isAvailableSpace(Long id) throws Exception {
+        Boolean isAvailable = spaceRepository.availableSpace(id);
+
+        if (isAvailable == null) {
+            throw new ModelNotFoundException("Space not found");
+        }
+
+        return isAvailable;
+    }
+
+    @Override
+    public List<SpaceDto> findAllSpaceDtoByFloor(Integer floor) throws Exception {
+
+        List<Space> listSpace = spaceRepository.findAllSpaceByFloor(floor);
+
+        if (listSpace.isEmpty()) {
+            throw new ModelNotFoundException("The floor not found ");
+        }
+
+        return listSpace.stream().map(this::mapToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SpaceDto> filterSpaceDto(SpaceFilterCriteriaDto spaceFilter) throws Exception {
+
+        List<Space> listSpace = spaceRepository.filterSpaceDto(spaceFilter.getFloor(), spaceFilter.getAvailable(), spaceFilter.getTypeSpace());
+
+        return listSpace.stream().map(this::mapToDto).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<SmallSpaceDto> findAllSmallSpaceDto() {
+        return spaceRepository.findAllSmallSpace();
+    }
+
+    private SpaceDto mapToDto(Space space) {
+        return SpaceDto.builder()
+                .id(space.getId())
+                .name(space.getName())
+                .floor(space.getFloor())
+                .description(space.getDescription())
+                .capacity(space.getCapacity())
+                .available(space.getAvailable())
+                .typeSpace(space.getTypeSpace().getName())
+                .build();
+    }
+
 
 }
