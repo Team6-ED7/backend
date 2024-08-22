@@ -24,6 +24,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
+    /* @IsUser ({"PERMIT ALL"})*/ //TODO: IMPLEMENT NEXT RELEASE AFTER MVP IS DONE
     public ResponseEntity<User> registerUser(@Valid @RequestBody UserDto userDto) {
         // Encrypt the password before saving the user
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
@@ -32,6 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    /* @IsUser ({"PERMIT ALL"})*/ //TODO: IMPLEMENT NEXT RELEASE AFTER MVP IS DONE
     public ResponseEntity<UserLoginResponse> loginUser(@Valid @RequestBody UserLoginDto userLoginDto) {
         return new ResponseEntity<>(userService.loginUser(userLoginDto), HttpStatus.OK);
     }

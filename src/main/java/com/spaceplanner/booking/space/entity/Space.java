@@ -6,18 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
-
-import java.util.UUID;
 
 @Entity
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "spaces")
 @Builder
 public class Space {
+
         @Id
         @GeneratedValue(strategy= GenerationType.SEQUENCE)
         private Long id;
@@ -27,18 +24,8 @@ public class Space {
         private Integer capacity;
         private Boolean available;
 
-//        @Column(name = "code_uuid")
-//        private UUID codeUuid;
-
         @ManyToOne
-        @JoinColumn
+        @JoinColumn(name = "type_space_id")
         private TypeSpace typeSpace;
-
-        //Genera el código UUID antes de guardar en la base de datos.
-//        @PrePersist
-//        private void generateUuidCode() {
-//                codeUuid = UUID.randomUUID();
-//        }
-
 
 }

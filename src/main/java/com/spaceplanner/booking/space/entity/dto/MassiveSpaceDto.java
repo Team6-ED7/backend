@@ -1,6 +1,5 @@
 package com.spaceplanner.booking.space.entity.dto;
 
-import com.spaceplanner.booking.typespace.entity.TypeSpace;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import java.io.Serializable;

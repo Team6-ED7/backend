@@ -39,6 +39,7 @@ public class User {
     private boolean credentialNoExpired;
 
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private RoleEnum roleEnum = RoleEnum.USER;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

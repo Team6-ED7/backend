@@ -11,7 +11,6 @@ import com.spaceplanner.booking.space.repository.ISpaceRepository;
 import com.spaceplanner.booking.space.service.ISpaceService;
 import com.spaceplanner.booking.typespace.entity.TypeSpace;
 import com.spaceplanner.booking.typespace.repository.ITypeSpaceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
@@ -26,11 +25,13 @@ import java.util.stream.IntStream;
 @Service
 public class SpaceServiceImpl implements ISpaceService {
 
-    @Autowired
-    private ISpaceRepository spaceRepository;
+    private final ISpaceRepository spaceRepository;
+    private final ITypeSpaceRepository typeSpaceRepository;
 
-    @Autowired
-    private ITypeSpaceRepository typeSpaceRepository;
+    public SpaceServiceImpl(ISpaceRepository spaceRepository, ITypeSpaceRepository typeSpaceRepository) {
+        this.spaceRepository = spaceRepository;
+        this.typeSpaceRepository = typeSpaceRepository;
+    }
 
     @Transactional()
     @Override
@@ -40,23 +41,7 @@ public class SpaceServiceImpl implements ISpaceService {
             throw new ModelAlreadyExistsException("Space already exists");
         }
 
-        Space space = Space.builder()
-                .name(spaceDto.getName())
-                .floor(spaceDto.getFloor())
-                .description(spaceDto.getDescription())
-                .available(spaceDto.getAvailable())
-                .capacity(spaceDto.getCapacity())
-                .build();
-
-        TypeSpace typeSpace = typeSpaceRepository.findTypeSpaceByNameIgnoreCase(spaceDto.getTypeSpace());
-
-        if (typeSpace == null) {
-            throw new ModelNotFoundException("Type Space not found");
-        }
-
-        space.setTypeSpace(typeSpace);
-
-        return spaceRepository.save(space);
+        return spaceRepository.save(mapSpaceDtoToSpace(spaceDto));
 
     }
 
@@ -137,15 +122,15 @@ public class SpaceServiceImpl implements ISpaceService {
             throw new ModelNotFoundException("The floor not found ");
         }
 
-        return listSpace.stream().map(this::mapToDto).collect(Collectors.toList());
+        return listSpace.stream().map(this::mapSpaceToSpaceDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<SpaceDto> filterSpaceDto(SpaceFilterCriteriaDto spaceFilter) throws Exception {
+    public List<SpaceDto> filterSpaceDto(SpaceFilterCriteriaDto spaceFilter) {
 
         List<Space> listSpace = spaceRepository.filterSpaceDto(spaceFilter.getFloor(), spaceFilter.getAvailable(), spaceFilter.getTypeSpace());
 
-        return listSpace.stream().map(this::mapToDto).collect(Collectors.toList());
+        return listSpace.stream().map(this::mapSpaceToSpaceDto).collect(Collectors.toList());
 
     }
 
@@ -154,7 +139,7 @@ public class SpaceServiceImpl implements ISpaceService {
         return spaceRepository.findAllSmallSpace();
     }
 
-    private SpaceDto mapToDto(Space space) {
+    private SpaceDto mapSpaceToSpaceDto(Space space) {
         return SpaceDto.builder()
                 .id(space.getId())
                 .name(space.getName())
@@ -163,6 +148,25 @@ public class SpaceServiceImpl implements ISpaceService {
                 .capacity(space.getCapacity())
                 .available(space.getAvailable())
                 .typeSpace(space.getTypeSpace().getName())
+                .build();
+    }
+
+    private Space mapSpaceDtoToSpace(SpaceDto spaceDto) throws Exception {
+
+        TypeSpace typeSpace = typeSpaceRepository.findTypeSpaceByNameIgnoreCase(spaceDto.getTypeSpace());
+
+        if (typeSpace == null) {
+            throw new ModelNotFoundException("Type Space not found");
+        }
+
+        return Space.builder()
+                .id(spaceDto.getId())
+                .name(spaceDto.getName())
+                .floor(spaceDto.getFloor())
+                .description(spaceDto.getDescription())
+                .capacity(spaceDto.getCapacity())
+                .available(spaceDto.getAvailable())
+                .typeSpace(typeSpace)
                 .build();
     }
 

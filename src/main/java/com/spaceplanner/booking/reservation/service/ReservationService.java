@@ -70,9 +70,11 @@ public class ReservationService {
     }
 
     public Optional<ReservationEntity> findById(Long id) {
+
         return reservationRepository.findById(id);
     }
     public List<ReservationEntity> findByUserId(Long userId) {
+
         return reservationRepository.findAllByUser_Id(userId);
     }
     public List<ReservationEntity> findBySpaceId(Long spaceId) {

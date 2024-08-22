@@ -28,8 +28,10 @@ public class SpaceDto implements Serializable {
     @NotBlank(message = "Description is required")
     private String description;
 
+    @Builder.Default
     private Integer capacity = 1;
 
+    @Builder.Default
     private Boolean available = true;
 
     @NotBlank(message = "Type Space is required")
