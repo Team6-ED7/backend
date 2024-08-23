@@ -81,7 +81,7 @@ public class ReservationService {
         return reservationRepository.findById(id);
     }
     @Transactional
-    public List<ReservationEntity> findByUserEmail(String userEmail) {
+    public List<String> findByUserEmail(String userEmail) {
 
 
         return reservationRepository.findAllBy_Email (userEmail);

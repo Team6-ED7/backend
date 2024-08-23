@@ -18,8 +18,8 @@ public interface IReservationRepository extends JpaRepository<ReservationEntity,
 
     List<ReservationEntity> findAllBySpaceAndStartDate(Space space, LocalDate startDate);
 
-    @Query("SELECT r FROM ReservationEntity r WHERE r.user.email = :userId")
-    List<ReservationEntity> findAllBy_Email(String userId);
+    @Query("SELECT r.space.name FROM ReservationEntity r WHERE r.user.email = :userId")
+    List<String> findAllBy_Email(String userId);
 
     List<ReservationEntity> findAllBySpace_Id(Long spaceId);
 
