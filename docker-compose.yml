@@ -12,7 +12,7 @@ services:
       - my-db:/var/lib/mysql
 
   appbooking:
-    image: atuhome/appbooking:0.1.0
+    image: atuhome/appbooking:0.1.2
     restart: always
     ports:
       - "8081:8081"
