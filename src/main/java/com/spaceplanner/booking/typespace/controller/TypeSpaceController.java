@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/typespaces")
 public class TypeSpaceController {
 
-    @Autowired
-    ITypeSpaceService typeSpaceService;
+    private final ITypeSpaceService typeSpaceService;
+
+    public TypeSpaceController(ITypeSpaceService typeSpaceService) {
+        this.typeSpaceService = typeSpaceService;
+    }
 
     @PostMapping("/register")
     /* @IsUser ({"ADMIN"})*/ //TODO: IMPLEMENT NEXT RELEASE AFTER MVP IS DONE

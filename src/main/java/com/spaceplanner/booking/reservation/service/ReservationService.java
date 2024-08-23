@@ -3,10 +3,11 @@ package com.spaceplanner.booking.reservation.service;
 import com.spaceplanner.booking.reservation.entity.ReservationEntity;
 import com.spaceplanner.booking.reservation.entity.ReservationStatus;
 import com.spaceplanner.booking.reservation.entity.dto.ReservationDto;
-import com.spaceplanner.booking.reservation.repository.IResorvationRepository;
+import com.spaceplanner.booking.reservation.entity.dto.SpaceAvailableDto;
+import com.spaceplanner.booking.reservation.entity.dto.SpaceFloorDateDto;
+import com.spaceplanner.booking.reservation.repository.IReservationRepository;
 import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.space.repository.ISpaceRepository;
-import com.spaceplanner.booking.user.entity.User;
 import com.spaceplanner.booking.user.repository.IUserRepository;
 import jakarta.transaction.Transactional;
 
@@ -14,7 +15,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,13 +27,13 @@ import static java.time.LocalDate.now;
 
 public class ReservationService {
 
-    private final IResorvationRepository reservationRepository;
+    private final IReservationRepository reservationRepository;
 
     private final ISpaceRepository spaceRepository;
 
     private final IUserRepository userRepository;
 
-    public ReservationService(IResorvationRepository reservationRepository, ISpaceRepository spaceRepository, IUserRepository userRepository) {
+    public ReservationService(IReservationRepository reservationRepository, ISpaceRepository spaceRepository, IUserRepository userRepository) {
         this.reservationRepository = reservationRepository;
         this.spaceRepository = spaceRepository;
         this.userRepository = userRepository;
@@ -39,7 +41,7 @@ public class ReservationService {
     @Transactional
     public ReservationEntity createReservation(ReservationDto reservationDto) {
 
-        validateReservationData(reservationDto);
+//        validateReservationData(reservationDto);
         Space space = spaceRepository.findSpaceByNameCreation (reservationDto.getSpaceName());
 
         if (!isSpaceAvailable(space,reservationDto.getStartDate())  ) {
@@ -64,7 +66,7 @@ public class ReservationService {
 
     private void validateReservationData(ReservationDto reservationDto) {
 
-        LocalDate startTime = reservationDto.getStartDate ();
+        LocalDate startTime = reservationDto.getStartDate();
 
 
         if (startTime.isAfter(now())) {
@@ -73,7 +75,7 @@ public class ReservationService {
 
 
     }
-@Transactional
+    @Transactional
     public Optional<ReservationEntity> findById(Long id) {
 
         return reservationRepository.findById(id);
@@ -82,20 +84,19 @@ public class ReservationService {
     public List<ReservationEntity> findByUserEmail(String userEmail) {
 
 
-        List<ReservationEntity> reservations = reservationRepository.findAllBy_Email (userEmail);
-        return reservations;
+        return reservationRepository.findAllBy_Email (userEmail);
     }
 
     public List<ReservationEntity> findBySpaceId(Long spaceId) {
         return reservationRepository.findAllBySpace_Id(spaceId);
     }
 
-    @Scheduled (cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     @Transactional
     public void deleteReservation() {
-      spaceRepository.findAll ().forEach (space -> {
+      spaceRepository.findAll().forEach (space -> {
             reservationRepository.findAllBySpaceAndStartDate (space, LocalDate.now ()).forEach (reservationEntity -> {
-                if (reservationEntity.getStartDate ().isBefore (LocalDate.now ())) {
+                if (reservationEntity.getStartDate().isBefore(LocalDate.now())) {
                     reservationEntity.setStatus (ReservationStatus.CANCELLED);
                     reservationRepository.save (reservationEntity);
 
@@ -103,6 +104,10 @@ public class ReservationService {
                 }
             });
         });
+    }
 
+    public List<Object> findAvailableSpaceDtoByFloorAndDate(SpaceFloorDateDto spaceFloorDateDto){
+
+        return reservationRepository.findSpaceAvailableDto(spaceFloorDateDto.getFloor(), spaceFloorDateDto.getStartDate());
     }
 }

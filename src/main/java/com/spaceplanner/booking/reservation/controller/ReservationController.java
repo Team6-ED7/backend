@@ -3,6 +3,8 @@ package com.spaceplanner.booking.reservation.controller;
 
 import com.spaceplanner.booking.reservation.entity.ReservationEntity;
 import com.spaceplanner.booking.reservation.entity.dto.ReservationDto;
+import com.spaceplanner.booking.reservation.entity.dto.SpaceAvailableDto;
+import com.spaceplanner.booking.reservation.entity.dto.SpaceFloorDateDto;
 import com.spaceplanner.booking.reservation.service.ReservationService;
 
 import com.spaceplanner.booking.user.entity.User;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,5 +66,11 @@ public class ReservationController {
         List<ReservationEntity> reservations = reservationService.findBySpaceId(spaceId);
 
         return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+
+    @PostMapping("/floor-date")
+    public ResponseEntity<List<Object>> getAvailableSpaceDto(@Valid @RequestBody SpaceFloorDateDto space){
+        List<Object> spaceAvailableDto = reservationService.findAvailableSpaceDtoByFloorAndDate(space);
+        return new ResponseEntity<>(spaceAvailableDto, HttpStatus.OK);
     }
 }

@@ -42,16 +42,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(HttpMethod.POST, "/api/**").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/api/users/register").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/api/users/login").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/api/typespaces/register").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/api/spaces/register").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/api/spaces/massive-register").permitAll();
-                    auth.requestMatchers(HttpMethod.GET, "/api/spaces/available/**").permitAll();
-                    auth.requestMatchers(HttpMethod.GET, "/api/spaces/floor/**").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/api/spaces/filter").permitAll();
-                    auth.requestMatchers(HttpMethod.GET, "/api/spaces/small-spaces").permitAll();
-                    auth.requestMatchers(HttpMethod.GET, "/api/spaces").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/api/**").permitAll();
 
 
 

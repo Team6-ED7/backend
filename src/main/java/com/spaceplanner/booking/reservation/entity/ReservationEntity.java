@@ -3,6 +3,7 @@ package com.spaceplanner.booking.reservation.entity;
 import com.spaceplanner.booking.space.entity.Space;
 import com.spaceplanner.booking.user.entity.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -24,8 +25,9 @@ public class ReservationEntity {
     @JoinColumn(name = "space_id")
     private Space space;
 
+    @FutureOrPresent
+    @Column(unique = true)
     private LocalDate startDate;
-
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
