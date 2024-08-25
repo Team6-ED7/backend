@@ -1,147 +1,123 @@
-# Historias de Usuario para Proyecto de Sistema de Reserva de Espacios
 
-## Gestión de Usuarios
+# Space Reservation System
 
-### Registro de Usuario
+## Overview
+The **Space Reservation System** is an application designed to manage the reservation of spaces such as meeting rooms, auditoriums, or any other reservable area. The application allows users to register, log in, and manage their reservations. Administrators can manage available spaces, assign roles to users, and keep the information up to date.
 
-**Descripción:**
-Como usuario, quiero poder registrarme en la aplicación para poder acceder a todas las funcionalidades.
+## Key Features
+- **User Management:** User registration, login, and profile management.
+- **Space Management:** Viewing spaces, registering, updating, and deleting spaces.
+- **Reservation Management:** Creating and viewing reservations.
 
-**Criterios de Aceptación:**
-- El usuario debe poder ingresar su nombre, correo electrónico, contraseña y rol.
-- El sistema debe validar que el correo no esté en uso.
-- El sistema debe enviar un correo de verificación.
+## Prerequisites
+Before you begin, make sure you have the following installed:
+- Docker
+- Docker Compose
+- Git
 
-### Inicio de Sesión
+## Getting Started
 
-**Descripción:**
-Como usuario registrado, quiero poder iniciar sesión para acceder a mi cuenta.
+### 1. Clone the Repository
+Start by cloning the repository to your local machine:
+```bash
+git clone https://github.com/your-username/space-reservation-system.git
+cd space-reservation-system
+```
 
-**Criterios de Aceptación:**
-- El usuario debe poder ingresar su correo y contraseña.
-- El sistema debe validar las credenciales y permitir el acceso.
-- En caso de error, se debe mostrar un mensaje de error.
+### 2. Build and Run the Application with Docker
+To build and run the application using Docker, follow these steps:
 
-### Perfil de Usuario
+```bash
+# Pull the Docker image
+docker pull atuhome/appbooking:0.1.2
 
-**Descripción:**
-Como usuario, quiero poder ver y editar mi perfil para mantener mi información actualizada.
+# Start the containers
+docker-compose up
+```
 
-**Criterios de Aceptación:**
-- El usuario debe poder ver su información de perfil.
-- El usuario debe poder actualizar su nombre, correo, contraseña y otros detalles personales.
-- El sistema debe validar los cambios y guardarlos.
+This will start all the necessary containers, including the application and the MySQL database.
 
-### Roles y Permisos
+### 3. Accessing the Application
+Once the containers are up and running, you can access the application in your browser at:
 
-**Descripción:**
-Como administrador, quiero poder asignar roles y permisos a los usuarios para gestionar el acceso a diferentes funcionalidades de la aplicación.
+Aquí tienes los nombres de las API junto con sus URL y paths:
 
-**Criterios de Aceptación:**
-- El administrador debe poder asignar roles como ADMIN y USER.
-- Los permisos deben ser gestionados según el rol asignado.
-- El sistema debe restringir el acceso a funcionalidades basadas en el rol del usuario.
+### API Names and Paths
 
-## Gestión de Espacios
+1. **User Registration**
+   - URL: `http://localhost:8081`
+   - Path: `/api/users/register`
 
-### Visualización de Espacios como Invitado
+2. **User Login**
+   - URL: `http://localhost:8081`
+   - Path: `/api/users/login`
 
-**Descripción:**
-Como invitado (Guest), quiero poder ver todas las opciones de espacio disponibles para tener una idea de las ofertas sin necesidad de registrarme.
+3. **Register Type of Space**
+   - URL: `http://localhost:8081`
+   - Path: `/api/typespaces/register`
 
-**Criterios de Aceptación:**
-- El invitado debe poder ver la lista completa de espacios disponibles.
-- El invitado debe poder ver detalles de cada espacio, como nombre, ubicación, capacidad y disponibilidad.
-- El sistema no debe permitir realizar reservas sin registrarse, pero debe mostrar un mensaje invitando al usuario a registrarse para hacerlo.
+4. **Register Space**
+   - URL: `http://localhost:8081`
+   - Path: `/api/spaces/register`
 
-### Registro de Espacios
+5. **Massive Register Space**
+   - URL: `http://localhost:8081`
+   - Path: `/api/spaces/massive-register`
 
-**Descripción:**
-Como administrador, quiero poder registrar nuevos espacios en la aplicación para ofrecer más opciones a los usuarios.
+6. **Filter Space**
+   - URL: `http://localhost:8081`
+   - Path: `/api/spaces/filter`
 
-**Criterios de Aceptación:**
-- El administrador debe poder ingresar detalles del espacio como nombre, ubicación, capacidad, descripción y disponibilidad.
-- El sistema debe validar que la información ingresada es correcta.
-- El sistema debe guardar el nuevo espacio en la base de datos y estar disponible para los usuarios.
+7. **Create Reservation**
+   - URL: `http://localhost:8081`
+   - Path: `/api/reservations`
 
-### Actualización de Espacios
+8. **Get Available Space**
+   - URL: `http://localhost:8081`
+   - Path: `/api/reservations/floor-date`
 
-**Descripción:**
-Como administrador, quiero poder actualizar la información de los espacios existentes para mantener los detalles correctos y actualizados.
+9. **Get All Spaces**
+   - URL: `http://localhost:8081`
+   - Path: `/api/spaces`
 
-**Criterios de Aceptación:**
-- El administrador debe poder actualizar cualquier detalle del espacio.
-- El sistema debe validar los cambios y guardarlos.
-- Los usuarios deben ver la información actualizada inmediatamente.
+10. **Get All Small Spaces**
+    - URL: `http://localhost:8081`
+    - Path: `/api/spaces/small-spaces`
 
-### Eliminación de Espacios
+11. **Get Spaces by Floor**
+    - URL: `http://localhost:8081`
+    - Path: `/api/spaces/floor/{floor}`
 
-**Descripción:**
-Como administrador, quiero poder eliminar espacios que ya no están disponibles para mantener la lista de espacios actualizada.
+12. **Check Space Availability**
+    - URL: `http://localhost:8081`
+    - Path: `/api/spaces/available/{id}`
 
-**Criterios de Aceptación:**
-- El administrador debe poder eliminar un espacio de la lista.
-- El sistema debe confirmar la acción antes de eliminar el espacio.
-- El espacio eliminado no debe ser visible para los usuarios ni estar disponible para reservas.
+13. **Get Reservation by ID**
+    - URL: `http://localhost:8081`
+    - Path: `/api/reservations/{id}`
 
-## Gestión de Reservas
+14. **Get Reservations by User**
+    - URL: `http://localhost:8081`
+    - Path: `/api/reservations/user/`
 
-### Crear Reserva
+15. **Get Reservations by Space**
+    - URL: `http://localhost:8081`
+    - Path: `/api/reservations/space/{spaceId}`
 
-**Descripción:**
-Como usuario, quiero poder reservar un espacio para un tiempo específico.
 
-**Criterios de Aceptación:**
-- El usuario debe poder seleccionar un espacio y un tiempo de reserva.
-- El sistema debe verificar la disponibilidad del espacio para el tiempo seleccionado.
-- La reserva debe ser guardada y confirmada al usuario.
+### 4. Running Tests
+To run the tests for the application, you can use the following command:
+```bash
+docker-compose exec app mvn test
+```
 
-### Ver Reservas de Usuario
+### 5. Stopping the Application
+To stop the application and remove the containers, use the following command:
+```bash
+docker-compose down
+```
 
-**Descripción:**
-Como usuario, quiero poder ver una lista de todas mis reservas para poder gestionarlas.
-
-**Criterios de Aceptación:**
-- El usuario debe poder ver una lista de sus reservas con detalles.
-- El sistema debe permitir al usuario cancelar o modificar reservas existentes.
-
-# TAREAS
-
-## ENTORNO
-
-- Configuración del proyecto, agregar las dependencias necesarias para el proyecto.
-- Configuración de docker-compose.yml con mysql
-- Crear la base de datos.
-
-## REGISTRO DE USUARIOS
-- Crear las entidad usuario.
-- Crear repositorio.
-- Crear servicio.
-- Crear controlador.
-- Crear seguridad.
-- Crear validación.
-- Encriptar contraseña
-- Manejo de errores.
-- Creación de pruebas unitarias.
-
-## INICIO DE SESIÓN
-- Crear endpoint para iniciar sesión.
-- Agregar validaciones de inicio de sesión.
-- Añadir seguridad a la contraseña.
-- Pruebas unitarias.
-
-## ROLES Y PERMISOS
-- Crear los roles (User, Admin, Guest).
-- Añadir seguridad a la contraseña.
-- Pruebas unitarias.
-
-## REGISTRO DE ESPACIOS
-- Crear las entidad spaces.
-- Crear repositorio.
-- Crear servicio.
-- Crear controlador.
-- Crear seguridad.
-- Crear validación.
-- Encriptar contraseña
-- Manejo de errores.
-- Creación de pruebas unitarias.
+## Project Structure
+- **/src**: Contains the source code of the application.
+- **/docker-compose.yml**: Docker Compose file for building and running the application.
+- **/README.md**: Project documentation.

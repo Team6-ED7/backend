@@ -1,0 +1,27 @@
+services:
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'dbbooking'
+      MYSQL_PASSWORD: 'changeme'
+      MYSQL_ROOT_PASSWORD: 'changeme'
+    ports:
+      - '3306:3306'
+    volumes:
+      - my-db:/var/lib/mysql
+
+  appbooking:
+    image: atuhome/appbooking:0.1.2
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: changeme
+
+volumes:
+  my-db:
