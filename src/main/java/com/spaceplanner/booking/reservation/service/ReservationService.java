@@ -3,7 +3,7 @@ package com.spaceplanner.booking.reservation.service;
 import com.spaceplanner.booking.reservation.entity.ReservationEntity;
 import com.spaceplanner.booking.reservation.entity.ReservationStatus;
 import com.spaceplanner.booking.reservation.entity.dto.ReservationDto;
-import com.spaceplanner.booking.reservation.entity.dto.SpaceAvailableDto;
+
 import com.spaceplanner.booking.reservation.entity.dto.SpaceFloorDateDto;
 import com.spaceplanner.booking.reservation.repository.IReservationRepository;
 import com.spaceplanner.booking.space.entity.Space;
@@ -15,8 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -80,12 +79,16 @@ public class ReservationService {
 
         return reservationRepository.findById(id);
     }
+
     @Transactional
-    public List<String> findByUserEmail(String userEmail) {
 
-
-        return reservationRepository.findAllBy_Email (userEmail);
+    public List<ReservationEntity> getReservationByUserId(Long userId) {
+        return reservationRepository.findAllByUserId(userId);
     }
+
+
+
+
 
     public List<ReservationEntity> findBySpaceId(Long spaceId) {
         return reservationRepository.findAllBySpace_Id(spaceId);

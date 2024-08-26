@@ -52,11 +52,10 @@ public class ReservationController {
 
     @GetMapping("/user/")
     /* @IsUser ({"USER"})*/ //TODO: IMPLEMENT NEXT RELEASE AFTER MVP IS DONE
-    public ResponseEntity<List<String>> getReservationsByUser(@Valid @RequestBody String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        List<String> reservedSpaceNames = reservationService.findByUserEmail (userEmail);
-        return new ResponseEntity<>(reservedSpaceNames, HttpStatus.OK);
+    public ResponseEntity<List<ReservationEntity>> getReservationsByUser(@RequestParam String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        List<ReservationEntity> reservations = reservationService.getReservationByUserId(user.getId());
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
     @GetMapping("/space/{spaceId}")
